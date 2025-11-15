@@ -16,6 +16,180 @@
   --header-bg: rgba(255, 255, 255, 0.98);
 }
 
+/* Dark Mode Variables */
+body.dark-mode {
+  --bg-color: #0d1117;
+  --text-color: #e6edf3;
+  --card-bg: #1c2128;
+  --header-bg: rgba(22, 27, 34, 0.98);
+  --secondary: #e6edf3;
+  --shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .hero {
+  background: linear-gradient(
+    135deg,
+    rgba(13, 17, 23, 1) 0%,
+    rgba(22, 27, 34, 1) 50%,
+    rgba(13, 17, 23, 1) 100%
+  );
+}
+
+body.dark-mode .hero::before {
+  background: radial-gradient(
+    circle,
+    rgba(233, 30, 99, 0.08) 0%,
+    rgba(255, 64, 129, 0.04) 50%,
+    transparent 100%
+  );
+}
+
+body.dark-mode .hero::after {
+  background: radial-gradient(
+    circle,
+    rgba(255, 64, 129, 0.06) 0%,
+    rgba(255, 128, 171, 0.03) 50%,
+    transparent 100%
+  );
+}
+
+body.dark-mode .skill-tag {
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.2), rgba(255, 64, 129, 0.25));
+  border-color: rgba(233, 30, 99, 0.4);
+  color: #ff80ab;
+}
+
+body.dark-mode .project-tag {
+  background: linear-gradient(135deg, rgba(233, 30, 99, 0.2), rgba(255, 64, 129, 0.25));
+  border-color: rgba(233, 30, 99, 0.4);
+  color: #ff80ab;
+}
+
+body.dark-mode .contact-card {
+  background: linear-gradient(135deg, #1c2128, #252c35);
+  border-color: rgba(233, 30, 99, 0.3);
+}
+
+body.dark-mode .project-item {
+  border-color: rgba(233, 30, 99, 0.2);
+  background: #1c2128;
+}
+
+body.dark-mode .about-section {
+  background-color: #161b22;
+}
+
+body.dark-mode .projects-section {
+  background-color: #0d1117;
+}
+
+body.dark-mode .contact-section {
+  background-color: #161b22;
+}
+
+body.dark-mode nav ul li a {
+  color: #e6edf3;
+}
+
+body.dark-mode .profile-image {
+  box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
+}
+
+/* Dark Mode Text Colors - Uniform Pink/White Theme */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+  color: #e6edf3 !important;
+}
+
+body.dark-mode .hero h1,
+body.dark-mode .hero h2 {
+  color: #e6edf3 !important;
+}
+
+body.dark-mode .section-header h2 {
+  color: #e6edf3 !important;
+}
+
+body.dark-mode h2 span,
+body.dark-mode .section-header h2 span {
+  color: var(--primary) !important;
+}
+
+body.dark-mode .section-header p {
+  color: #e6edf3;
+  opacity: 0.9;
+}
+
+body.dark-mode .project-info h3,
+body.dark-mode .experience-item h4,
+body.dark-mode .contact-card-title {
+  color: #ffffff;
+}
+
+body.dark-mode p,
+body.dark-mode .about-text,
+body.dark-mode .project-info p,
+body.dark-mode .experience-item p {
+  color: #e6edf3;
+  opacity: 0.85;
+}
+
+body.dark-mode .footer-links a,
+body.dark-mode .copyright {
+  color: #e6edf3;
+  opacity: 0.8;
+}
+
+body.dark-mode .footer-links a:hover {
+  color: #ff80ab;
+  opacity: 1;
+}
+
+body.dark-mode .period,
+body.dark-mode .contact-text {
+  color: #c9d1d9;
+}
+
+body.dark-mode .project-link {
+  color: #ff80ab;
+}
+
+body.dark-mode .project-link:hover {
+  color: #ff4081;
+}
+
+/* Dark mode experience cards */
+body.dark-mode .experience-item {
+  background: #1c2128;
+  border-left-color: var(--primary);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .experience-item:hover {
+  background: #252c35;
+  box-shadow: 0 8px 25px rgba(233, 30, 99, 0.3);
+}
+
+body.dark-mode .company {
+  color: #e6edf3;
+}
+
+/* Dark mode footer */
+body.dark-mode footer {
+  background: #161b22;
+  border-top: 1px solid rgba(233, 30, 99, 0.2);
+}
+
+/* Fix footer logo visibility in dark mode */
+body.dark-mode .footer-logo {
+  background: linear-gradient(135deg, #ff80ab, #ff4081);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 *::-webkit-scrollbar {
   display: none;
 }
@@ -299,6 +473,41 @@ nav ul li a.active {
   cursor: pointer;
 }
 
+/* Theme Toggle Button */
+.theme-toggle {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-right: 15px;
+  font-size: 1.1rem;
+}
+
+.theme-toggle:hover {
+  background: var(--gradient);
+  color: white;
+  border-color: transparent;
+  transform: rotate(20deg) scale(1.1);
+}
+
+body.dark-mode .theme-toggle {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
 /* Hide Let's Talk button on small screens */
 .lets-talk {
   display: inline-block;
@@ -307,6 +516,13 @@ nav ul li a.active {
 @media (max-width: 768px) {
   .lets-talk {
     display: none !important;
+  }
+  
+  .theme-toggle {
+    margin-right: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
   }
 }
 
