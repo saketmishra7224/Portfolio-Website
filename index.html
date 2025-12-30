@@ -1,432 +1,922 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Saket Mishra - Full Stack Developer</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap"
-      rel="stylesheet"
-    />
+    <title>Saket Mishra // System Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <div class="container header-container">
-        <div class="logo">Saket Mishra</div>
-        <nav>
-          <ul>
-            <li><a href="#home" class="nav-link active">Home</a></li>
-            <li><a href="#about" class="nav-link">About</a></li>
-            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-            <li><a href="#contact" class="nav-link">Contact</a></li>
-          </ul>
-        </nav>
-        <div class="right-section">
-          <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
-            <i class="fas fa-moon"></i>
-          </button>
-          <a href="#contact" class="btn btn-primary lets-talk">Let's Connect</a>
-          <div class="mobile-menu-btn">
-            <i class="fas fa-bars"></i>
-          </div>
-          <div class="mobile-nav-dropdown" id="mobile-nav-dropdown">
-            <ul>
-              <li><a href="#home" class="nav-link">Home</a></li>
-              <li><a href="#about" class="nav-link">About</a></li>
-              <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-              <li><a href="#contact" class="nav-link">Contact</a></li>
+</head>
+<body class="dark-mode">
+    
+    <!-- ========================================
+         NAVIGATION SYSTEM
+    ======================================== -->
+    <nav class="system-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-bracket">[</span>
+                <span class="brand-name">SAKET.MISHRA</span>
+                <span class="brand-bracket">]</span>
+                <span class="system-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">online</span>
+                </span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#system" data-section="boot">$ system</a></li>
+                <li><a href="#profile" data-section="profile">$ profile</a></li>
+                <li><a href="#stack" data-section="stack">$ stack</a></li>
+                <li><a href="#systems" data-section="systems">$ systems</a></li>
+                <li><a href="#timeline" data-section="timeline">$ timeline</a></li>
+                <li><a href="#endpoints" data-section="endpoints">$ endpoints</a></li>
             </ul>
-          </div>
+            <button class="mobile-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
-      </div>
-    </header>
+    </nav>
 
-    <main>
-      <section class="hero" id="home">
-        <div class="container hero-container">
-          <div class="hero-image">
-            <img
-              src="/assets/profile.png"
-              alt="Saket Mishra"
-              class="profile-image"
-            />
-          </div>
-          <div class="hero-content">
-            <h1>Hi, I'm <span>Saket Mishra</span></h1>
-            <h2>Full Stack Developer & AI Enthusiast</h2>
-            <p>
-              Results-driven 3rd-year B.Tech Computer Science student with hands-on experience in full-stack and AI-based development. 
-              Proficient in building responsive, scalable web applications using the MERN stack.
-            </p>
-            <div class="hero-buttons">
-              <a
-                href="/assets/Resume.pdf"
-                class="btn btn-primary hire-me"
-                target="_blank"
-                rel="noopener"
-                >Resume</a
-              >
-              <a href="#portfolio" class="btn btn-outline see-projects"
-                >See Projects</a
-              >
-            </div>
-            <div class="social-links">
-              <a
-                href="https://linkedin.com/in/saket-mishra-1a1b312a1"
-                class="social-link"
-                target="_blank"
-              >
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              <a
-                href="https://github.com/saketmishra7224"
-                class="social-link"
-                target="_blank"
-              >
-                <i class="fab fa-github"></i>
-              </a>
-              <a
-                href="https://www.instagram.com/saketmishra.99/"
-                class="social-link"
-                target="_blank"
-              >
-                <i class="fab fa-instagram"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="about" class="about-section">
+    <!-- ========================================
+         SECTION 1: SYSTEM BOOT / HERO
+    ======================================== -->
+    <section id="system" class="system-boot">
         <div class="container">
-          <h2>About <span>Me</span></h2>
-          <div class="about-container">
-            <div class="about-content">
-              <p class="about-text">
-                Results-driven 3rd-year B.Tech Computer Science student at SRM University AP with hands-on experience 
-                in full-stack and AI-based development. Proficient in building responsive, scalable web applications using the MERN stack.
-              </p>
-              <p class="about-text">
-                Experienced in software engineering, REST API integration, and Agile workflows with proven success across 
-                hackathons and real-world deployments.
-              </p>
-              <div class="skills">
-                <h3>Technical Skills</h3>
-                <div class="skill-tags">
-                  <span class="skill-tag">C++</span>
-                  <span class="skill-tag">JavaScript</span>
-                  <span class="skill-tag">Python</span>
-                  <span class="skill-tag">C</span>
-                  <span class="skill-tag">SQL</span>
-                  <span class="skill-tag">Java</span>
-                  <span class="skill-tag">React.js</span>
-                  <span class="skill-tag">Next.js</span>
-                  <span class="skill-tag">HTML/CSS</span>
-                  <span class="skill-tag">Bootstrap</span>
-                  <span class="skill-tag">Tailwind CSS</span>
-                  <span class="skill-tag">Node.js</span>
-                  <span class="skill-tag">Express.js</span>
-                  <span class="skill-tag">MongoDB</span>
-                  <span class="skill-tag">Mongoose</span>
-                  <span class="skill-tag">MySQL</span>
-                  <span class="skill-tag">REST APIs</span>
-                  <span class="skill-tag">Git</span>
-                  <span class="skill-tag">GitHub</span>
-                  <span class="skill-tag">VS Code</span>
-                  <span class="skill-tag">Postman</span>
-                  <span class="skill-tag">Figma</span>
-                  <span class="skill-tag">Agile</span>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-controls">
+                        <span class="control-dot red"></span>
+                        <span class="control-dot yellow"></span>
+                        <span class="control-dot green"></span>
+                    </div>
+                    <div class="terminal-title">system@engineer:~</div>
                 </div>
-              </div>
-              <div class="experience">
-                <h3>Experience</h3>
-                <div class="experience-item">
-                  <h4>Front-End Developer Intern - CultureVo (NoviFE Platform)</h4>
-                  <div class="period">May 2025 - Present</div>
-                  <p>Built and deployed the complete frontend for NoviFE, an AI cultural companion platform engaging 1000+ users across 50+ global AI personalities. Developed responsive PWA using Next.js 15, React 19, and Tailwind CSS.</p>
+                <div class="terminal-body">
+                    <div class="terminal-line">
+                        <span class="prompt">saket@system:~$</span> 
+                        <span class="command">whoami</span>
+                    </div>
+                    <div class="terminal-output">
+                        <div class="output-line" id="name-output"></div>
+                    </div>
+                    
+                    <div class="terminal-line">
+                        <span class="prompt">saket@system:~$</span> 
+                        <span class="command">cat role.txt</span>
+                    </div>
+                    <div class="terminal-output">
+                        <div class="output-line" id="role-output"></div>
+                    </div>
+                    
+                    <div class="terminal-line">
+                        <span class="prompt">saket@system:~$</span> 
+                        <span class="command">ls tech_stack/</span>
+                    </div>
+                    <div class="terminal-output">
+                        <div class="output-line" id="stack-output"></div>
+                    </div>
+                    
+                    <div class="terminal-line">
+                        <span class="prompt">saket@system:~$</span> 
+                        <span class="command typed-text" id="typing-cursor"></span>
+                        <span class="cursor-blink">_</span>
+                    </div>
                 </div>
-                <div class="experience-item">
-                  <h4>Member - NextTech Lab, SRM University AP</h4>
-                  <div class="period">Feb 2025 - Aug 2025</div>
-                  <p>Designed and developed AI-driven prototypes integrating real-time APIs. Mentored 3+ junior developers and improved sprint velocity through Agile collaboration.</p>
-                </div>
-                <div class="experience-item">
-                  <h4>B.Tech Computer Science - SRM University AP</h4>
-                  <div class="period">Aug 2023 - May 2027</div>
-                </div>
-              </div>
-              <div class="connect" style="margin-top: 40px">
-                <h3>Connect With Me</h3>
-                <div
-                  class="social-links"
-                  style="display: flex; gap: 15px; margin-top: 15px"
-                >
-                  <a
-                    href="https://linkedin.com/in/saket-mishra-1a1b312a1"
-                    class="social-link"
-                    target="_blank"
-                  >
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                  <a
-                    href="https://github.com/saketmishra7224"
-                    class="social-link"
-                    target="_blank"
-                  >
-                    <i class="fab fa-github"></i>
-                  </a>
-                  <a
-                    href="https://www.instagram.com/saketmishra.99/"
-                    class="social-link"
-                    target="_blank"
-                  >
-                    <i class="fab fa-instagram"></i>
-                  </a>
-                </div>
-              </div>
             </div>
-          </div>
+            
+            <div class="quick-actions">
+                <a href="/assets/Resume.pdf" class="action-btn" target="_blank" rel="noopener">
+                    <i class="fas fa-file-code"></i>
+                    <span>resume.pdf</span>
+                </a>
+                <a href="#systems" class="action-btn">
+                    <i class="fas fa-server"></i>
+                    <span>view_systems()</span>
+                </a>
+                <a href="#endpoints" class="action-btn">
+                    <i class="fas fa-terminal"></i>
+                    <span>connect()</span>
+                </a>
+            </div>
         </div>
-      </section>
+    </section>
 
-      <section id="portfolio" class="projects-section">
+    <!-- ========================================
+         SECTION 2: ENGINEERING PROFILE
+    ======================================== -->
+    <section id="profile" class="engineering-profile">
         <div class="container">
-          <div class="section-header">
-            <h2>My <span>Projects</span></h2>
-            <p>
-              Here are some of my recent projects that showcase my skills in
-              full-stack development, AI integration, and modern web
-              technologies
-            </p>
-          </div>
-          <div class="projects-container">
-            <div class="project-item project-card">
-              <div class="project-image">
-                <img src="/assets/portfoliogenerator.png" alt="Portfolio Generator Project" />
-              </div>
-              <div class="project-info">
-                <h3>Portfolio Generator (MERN)</h3>
-                <p>
-                  Designed and developed a MERN-based dynamic portfolio generator with 5 templates and real-time live preview. 
-                  Implemented 10+ REST APIs with authentication, user data storage in MongoDB, and template customization.
-                </p>
-                <div class="project-tags">
-                  <span class="project-tag">React.js</span>
-                  <span class="project-tag">Node.js</span>
-                  <span class="project-tag">Express.js</span>
-                  <span class="project-tag">MongoDB</span>
-                  <span class="project-tag">REST APIs</span>
-                  <span class="project-tag">JWT Auth</span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://portfolio-generator-4z89.onrender.com/"
-                    class="project-link"
-                    target="_blank"
-                    rel="noopener"
-                    ><i class="fas fa-external-link-alt"></i> Live Demo</a
-                  >
-                  <a
-                    href="https://github.com/saketmishra7224/Portfolio-Generator"
-                    class="project-link"
-                    target="_blank"
-                    rel="noopener"
-                    ><i class="fab fa-github"></i> Source Code</a
-                  >
-                </div>
-              </div>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-bracket">{'</span>
+                    <span>ENGINEERING.PROFILE</span>
+                    <span class="title-bracket">'}</span>
+                </h2>
+                <div class="section-path">~/config/engineer.json</div>
             </div>
-            <div class="project-item project-card">
-              <div class="project-image">
-                <img src="/assets/svalinn.png" alt="Svalinn Chrome Extension" />
-              </div>
-              <div class="project-info">
-                <h3>Svalinn (Chrome Extension)</h3>
-                <p>
-                  Developed a focus-enhancing Chrome extension to restrict distracting sites via password-protected rate-limiting. 
-                  Integrated local storage to securely manage user credentials for 100+ active testers. Received 4.8/5 satisfaction rating.
-                </p>
-                <div class="project-tags">
-                  <span class="project-tag">JavaScript</span>
-                  <span class="project-tag">Chrome API</span>
-                  <span class="project-tag">HTML/CSS</span>
-                  <span class="project-tag">Local Storage</span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://chromewebstore.google.com/detail/svalinn/aikbllpnjoaiabkibdddehegojiiehal"
-                    class="project-link"
-                    target="_blank"
-                    rel="noopener"
-                    ><i class="fas fa-external-link-alt"></i> Chrome Web Store</a
-                  >
-                  <a
-                    href="https://github.com/saketmishra7224/Svalinn"
-                    class="project-link"
-                    target="_blank"
-                    rel="noopener"
-                    ><i class="fab fa-github"></i> Source Code</a
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="project-item project-card">
-              <div class="project-image">
-                <img src="/assets/calmify.png" alt="Calmify Mental Wellness App" />
-              </div>
-              <div class="project-info">
-                <h3>Calmify (Full Stack App)</h3>
-                <p>
-                  Engineered a full-stack mental wellness platform using React, Node.js, MongoDB, Azure OpenAI, and Socket.IO. 
-                  Implemented JWT authentication, role-based access, and chat handling 500+ messages/day at 99% uptime.
-                </p>
-                <div class="project-tags">
-                  <span class="project-tag">React</span>
-                  <span class="project-tag">Node.js</span>
-                  <span class="project-tag">MongoDB</span>
-                  <span class="project-tag">Azure OpenAI</span>
-                  <span class="project-tag">Socket.IO</span>
-                  <span class="project-tag">JWT</span>
-                  <span class="project-tag">Tailwind CSS</span>
-                </div>
-                <div class="project-links">
-                  <a
-                    href="https://calmify-frontend-363o.onrender.com/"
-                    class="project-link"
-                    target="_blank"
-                    rel="noopener"
-                    ><i class="fas fa-external-link-alt"></i> Live Demo</a
-                  >
-                  <a
-                    href="https://github.com/saketmishra7224/Calmify"
-                    class="project-link"
-                    target="_blank"
-                    rel="noopener"
-                    ><i class="fab fa-github"></i> Source Code</a
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="project-item project-card">
-              <div class="project-image">
-                <img
-                  src="/assets/rundown.png"
-                  alt="RunDown AI Task Manager"
-                />
-              </div>
-              <div class="project-info">
-                <h3>RunDown (AI Task Manager)</h3>
-                <p>
-                  Developed AI-based task manager automating email and calendar task extraction using Python Flask and Gemini API. 
-                  Trained classification model with 90% accuracy for task prioritization from 1000+ emails per user.
-                </p>
-                <div class="project-tags">
-                  <span class="project-tag">Python</span>
-                  <span class="project-tag">Flask</span>
-                  <span class="project-tag">Gemini API</span>
-                  <span class="project-tag">Google Calendar API</span>
-                  <span class="project-tag">Gmail API</span>
-                  <span class="project-tag">OAuth 2.0</span>
-                </div>
-                <div class="project-links">
-                  <a href="https://rundown-sx8n.onrender.com/" class="project-link" target="_blank" rel="noopener">
-                    <i class="fas fa-external-link-alt"></i> Live Demo
-                  </a>
-                  <a href="https://github.com/saketmishra7224/RUNDOWN" class="project-link" target="_blank" rel="noopener">
-                    <i class="fab fa-github"></i> Source Code
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="project-item project-card">
-              <div class="project-image">
-                <img src="/assets/trainbuddy.png" alt="BuddyOnTrain Project" />
-              </div>
-              <div class="project-info">
-                <h3>BuddyOnTrain: Connecting Train Travelers</h3>
-                <p>
-                  Real-time social platform helping train travelers find companions for their journey. Features train search, 
-                  travel status management, buddy finder with friend requests, and secure authentication for 100+ users.
-                </p>
-                <div class="project-tags">
-                  <span class="project-tag">React.js</span>
-                  <span class="project-tag">Node.js</span>
-                  <span class="project-tag">Express.js</span>
-                  <span class="project-tag">MongoDB</span>
-                  <span class="project-tag">JWT</span>
-                  <span class="project-tag">Tailwind CSS</span>
-                </div>
-                <div class="project-links">
-                  <a href="https://trainbuddy.onrender.com/" class="project-link" target="_blank" rel="noopener">
-                    <i class="fas fa-external-link-alt"></i> Live Demo
-                  </a>
-                  <a href="https://github.com/saketmishra7224/BuddyOnTrain" class="project-link" target="_blank" rel="noopener">
-                    <i class="fab fa-github"></i> Source Code
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section id="contact" class="contact-section">
+            <div class="profile-container">
+                <div class="profile-image-container">
+                    <img src="/assets/profile.png" alt="Saket Mishra" class="profile-pic" />
+                    <div class="profile-status">
+                        <span class="status-dot"></span>
+                        <span>Available for opportunities</span>
+                    </div>
+                </div>
+
+            <div class="profile-grid">
+                <div class="config-block">
+                    <div class="config-header">
+                        <i class="fas fa-code"></i>
+                        <span>System Metadata</span>
+                    </div>
+                    <div class="config-content">
+                        <div class="config-line">
+                            <span class="key">name:</span>
+                            <span class="value">"Saket Mishra"</span>
+                        </div>
+                        <div class="config-line">
+                            <span class="key">role:</span>
+                            <span class="value">"Full Stack Engineer"</span>
+                        </div>
+                        <div class="config-line">
+                            <span class="key">specialization:</span>
+                            <span class="value">["Backend Systems", "AI Integration"]</span>
+                        </div>
+                        <div class="config-line">
+                            <span class="key">education:</span>
+                            <span class="value">"B.Tech CS @ SRM University AP"</span>
+                        </div>
+                        <div class="config-line">
+                            <span class="key">year:</span>
+                            <span class="value">3</span>
+                        </div>
+                        <div class="config-line">
+                            <span class="key">location:</span>
+                            <span class="value">"Andhra Pradesh, India"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-block">
+                    <div class="config-header">
+                        <i class="fas fa-cogs"></i>
+                        <span>Core Competencies</span>
+                    </div>
+                    <div class="config-content">
+                        <div class="config-line">
+                            <span class="key">primary_focus:</span>
+                            <span class="value">"Scalable Web Applications"</span>
+                        </div>
+                        <div class="config-line">
+                            <span class="key">architecture:</span>
+                            <span class="value">["MERN Stack", "RESTful APIs", "Microservices"]</span>
+                        </div>
+                        <div class="config-line">
+                            <span class="key">strengths:</span>
+                            <span class="value">["Full Stack Development", "API Integration", "Real-time Systems"]</span>
+                        </div>
+                        <div class="config-line">
+                            <span class="key">current_interests:</span>
+                            <span class="value">["AI/ML Integration", "Distributed Systems", "Cloud Architecture"]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-block full-width">
+                    <div class="config-header">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Impact Metrics</span>
+                    </div>
+                    <div class="config-content">
+                        <div class="metrics-grid">
+                            <div class="metric-item">
+                                <div class="metric-value">20+</div>
+                                <div class="metric-label">Projects Built</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">10+</div>
+                                <div class="metric-label">REST APIs Built</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">200+</div>
+                                <div class="metric-label">GitHub Commits</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-value">3+</div>
+                                <div class="metric-label">Tech Stacks Mastered</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SECTION 3: TECH STACK
+    ======================================== -->
+    <section id="stack" class="tech-stack">
         <div class="container">
-          <div class="section-header">
-            <h2>Get in <span>Touch</span></h2>
-            <p>Let's discuss opportunities and collaborations.</p>
-          </div>
-          <div class="contact-container">
-            <div class="contact-card">
-              <h3 class="contact-card-title">Contact Information</h3>
-              <div class="contact-info-item">
-                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                <div class="contact-text"><strong>Email:</strong> saketmishra9476@gmail.com</div>
-              </div>
-              <div class="contact-info-item">
-                <div class="contact-icon"><i class="fas fa-phone"></i></div>
-                <div class="contact-text"><strong>Phone:</strong> +91 9569778960</div>
-              </div>
-              <div class="contact-info-item">
-                <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
-                <div class="contact-text"><strong>Location:</strong> Mangalgiri, Guntur, Andhra Pradesh, India</div>
-              </div>
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-bracket">{'</span>
+                    <span>TECH.STACK</span>
+                    <span class="title-bracket">'}</span>
+                </h2>
+                <div class="section-path">~/dependencies/installed</div>
             </div>
-            <div class="contact-card">
-              <!-- Social links already present in About section, this card removed for brevity -->
-          </div>
-        </div>
-      </section>
-    </main>
 
-    <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-logo">Saket Mishra</div>
-          <div class="footer-links">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#contact">Contact</a>
-          </div>
-          <div class="copyright">
-            &copy; 2025 Saket Mishra. All Rights Reserved.
-          </div>
+            <div class="stack-grid">
+                <!-- Frontend Module -->
+                <div class="stack-module" data-category="frontend">
+                    <div class="module-header">
+                        <div class="module-icon"><i class="fab fa-react"></i></div>
+                        <h3>Frontend</h3>
+                        <span class="module-status">active</span>
+                    </div>
+                    <div class="module-body">
+                        <div class="tech-item">
+                            <span class="tech-name">React.js</span>
+                            <span class="tech-version">v19</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 90%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Next.js</span>
+                            <span class="tech-version">v15</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 85%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">JavaScript/ES6+</span>
+                            <span class="tech-version">ES2024</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 95%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Tailwind CSS</span>
+                            <span class="tech-version">v3</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 88%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">HTML5/CSS3</span>
+                            <span class="tech-version">latest</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 92%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backend Module -->
+                <div class="stack-module" data-category="backend">
+                    <div class="module-header">
+                        <div class="module-icon"><i class="fab fa-node-js"></i></div>
+                        <h3>Backend</h3>
+                        <span class="module-status">active</span>
+                    </div>
+                    <div class="module-body">
+                        <div class="tech-item">
+                            <span class="tech-name">Node.js</span>
+                            <span class="tech-version">v20</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 90%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Express.js</span>
+                            <span class="tech-version">v4</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 92%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Python</span>
+                            <span class="tech-version">v3.11</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 85%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Flask</span>
+                            <span class="tech-version">v3</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 80%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">REST APIs</span>
+                            <span class="tech-version">spec</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 93%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database Module -->
+                <div class="stack-module" data-category="database">
+                    <div class="module-header">
+                        <div class="module-icon"><i class="fas fa-database"></i></div>
+                        <h3>Databases</h3>
+                        <span class="module-status">active</span>
+                    </div>
+                    <div class="module-body">
+                        <div class="tech-item">
+                            <span class="tech-name">MongoDB</span>
+                            <span class="tech-version">v7</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 90%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Mongoose ODM</span>
+                            <span class="tech-version">v8</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 88%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">MySQL</span>
+                            <span class="tech-version">v8</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 82%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">SQL</span>
+                            <span class="tech-version">std</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 85%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI/ML Module -->
+                <div class="stack-module" data-category="ai">
+                    <div class="module-header">
+                        <div class="module-icon"><i class="fas fa-brain"></i></div>
+                        <h3>AI / ML</h3>
+                        <span class="module-status">active</span>
+                    </div>
+                    <div class="module-body">
+                        <div class="tech-item">
+                            <span class="tech-name">Azure OpenAI</span>
+                            <span class="tech-version">API</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 85%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Gemini API</span>
+                            <span class="tech-version">v1</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 82%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Google APIs</span>
+                            <span class="tech-version">OAuth2</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 88%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools & Infra Module -->
+                <div class="stack-module" data-category="tools">
+                    <div class="module-header">
+                        <div class="module-icon"><i class="fas fa-tools"></i></div>
+                        <h3>Tools & Infra</h3>
+                        <span class="module-status">active</span>
+                    </div>
+                    <div class="module-body">
+                        <div class="tech-item">
+                            <span class="tech-name">Git / GitHub</span>
+                            <span class="tech-version">v2</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 93%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Socket.IO</span>
+                            <span class="tech-version">v4</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 87%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">JWT Auth</span>
+                            <span class="tech-version">std</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 90%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Postman</span>
+                            <span class="tech-version">v10</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 85%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">VS Code</span>
+                            <span class="tech-version">latest</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 95%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Languages Module -->
+                <div class="stack-module" data-category="languages">
+                    <div class="module-header">
+                        <div class="module-icon"><i class="fas fa-code"></i></div>
+                        <h3>Languages</h3>
+                        <span class="module-status">active</span>
+                    </div>
+                    <div class="module-body">
+                        <div class="tech-item">
+                            <span class="tech-name">C++</span>
+                            <span class="tech-version">C++17</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 88%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">JavaScript</span>
+                            <span class="tech-version">ES6+</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 95%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Python</span>
+                            <span class="tech-version">3.11</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 85%"></div></div>
+                        </div>
+                        <div class="tech-item">
+                            <span class="tech-name">Java</span>
+                            <span class="tech-version">JDK17</span>
+                            <div class="tech-bar"><div class="tech-fill" style="width: 80%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <!-- ========================================
+         SECTION 4: ALL SYSTEMS (Projects Grid)
+    ======================================== -->
+    <section id="systems" class="all-systems">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-bracket">{'</span>
+                    <span>ALL.SYSTEMS</span>
+                    <span class="title-bracket">'}</span>
+                </h2>
+                <div class="section-path">~/projects/deployed</div>
+            </div>
+
+            <div class="systems-grid">
+                <!-- System Card 1 -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="/assets/portfoliogenerator.png" alt="Portfolio Generator" />
+                    </div>
+                    <div class="system-status-bar">
+                        <span class="status-indicator running"></span>
+                        <span class="status-text">RUNNING</span>
+                    </div>
+                    <h3 class="system-name">Portfolio Generator</h3>
+                    <p class="system-desc">MERN-based dynamic portfolio generator with 5 templates, real-time preview, and MongoDB persistence. 10+ REST APIs with JWT authentication.</p>
+                    
+                    <div class="system-arch">
+                        <div class="arch-item">
+                            <span class="arch-label">Frontend:</span>
+                            <span class="arch-value">React.js</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Backend:</span>
+                            <span class="arch-value">Node.js + Express</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Database:</span>
+                            <span class="arch-value">MongoDB</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Auth:</span>
+                            <span class="arch-value">JWT</span>
+                        </div>
+                    </div>
+
+                    <div class="system-tags">
+                        <span class="sys-tag">React.js</span>
+                        <span class="sys-tag">Node.js</span>
+                        <span class="sys-tag">MongoDB</span>
+                        <span class="sys-tag">REST API</span>
+                    </div>
+
+                    <div class="system-links">
+                        <a href="https://portfolio-generator-4z89.onrender.com/" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fas fa-play-circle"></i> LIVE DEMO
+                        </a>
+                        <a href="https://github.com/saketmishra7224/Portfolio-Generator" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fab fa-github"></i> Repo
+                        </a>
+                    </div>
+                </div>
+
+                <!-- System Card 2 -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="/assets/calmify.png" alt="Calmify" />
+                    </div>
+                    <div class="system-status-bar">
+                        <span class="status-indicator running"></span>
+                        <span class="status-text">RUNNING</span>
+                    </div>
+                    <h3 class="system-name">Calmify</h3>
+                    <p class="system-desc">Full-stack mental wellness platform with Azure OpenAI integration, real-time chat via Socket.IO, and role-based access. 500+ msgs/day, 99% uptime.</p>
+                    
+                    <div class="system-arch">
+                        <div class="arch-item">
+                            <span class="arch-label">Frontend:</span>
+                            <span class="arch-value">React + Tailwind</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Backend:</span>
+                            <span class="arch-value">Node.js + Socket.IO</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">AI:</span>
+                            <span class="arch-value">Azure OpenAI</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Database:</span>
+                            <span class="arch-value">MongoDB</span>
+                        </div>
+                    </div>
+
+                    <div class="system-tags">
+                        <span class="sys-tag">React</span>
+                        <span class="sys-tag">Node.js</span>
+                        <span class="sys-tag">Azure AI</span>
+                        <span class="sys-tag">Socket.IO</span>
+                    </div>
+
+                    <div class="system-links">
+                        <a href="https://calmify-frontend-363o.onrender.com/" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fas fa-play-circle"></i> LIVE DEMO
+                        </a>
+                        <a href="https://github.com/saketmishra7224/Calmify" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fab fa-github"></i> Repo
+                        </a>
+                    </div>
+                </div>
+
+                <!-- System Card 3 -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="/assets/rundown.png" alt="RunDown" />
+                    </div>
+                    <div class="system-status-bar">
+                        <span class="status-indicator running"></span>
+                        <span class="status-text">RUNNING</span>
+                    </div>
+                    <h3 class="system-name">RunDown</h3>
+                    <p class="system-desc">AI task automation using Gemini API for email parsing and calendar integration. 90% classification accuracy across 1000+ emails per user.</p>
+                    
+                    <div class="system-arch">
+                        <div class="arch-item">
+                            <span class="arch-label">Backend:</span>
+                            <span class="arch-value">Python Flask</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">AI:</span>
+                            <span class="arch-value">Gemini API</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">APIs:</span>
+                            <span class="arch-value">Gmail + Calendar</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Auth:</span>
+                            <span class="arch-value">OAuth 2.0</span>
+                        </div>
+                    </div>
+
+                    <div class="system-tags">
+                        <span class="sys-tag">Python</span>
+                        <span class="sys-tag">Flask</span>
+                        <span class="sys-tag">Gemini</span>
+                        <span class="sys-tag">OAuth</span>
+                    </div>
+
+                    <div class="system-links">
+                        <a href="https://rundown-sx8n.onrender.com/" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fas fa-play-circle"></i> LIVE DEMO
+                        </a>
+                        <a href="https://github.com/saketmishra7224/RUNDOWN" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fab fa-github"></i> Repo
+                        </a>
+                    </div>
+                </div>
+
+                <!-- System Card 4 -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="/assets/trainbuddy.png" alt="BuddyOnTrain" />
+                    </div>
+                    <div class="system-status-bar">
+                        <span class="status-indicator running"></span>
+                        <span class="status-text">RUNNING</span>
+                    </div>
+                    <h3 class="system-name">BuddyOnTrain</h3>
+                    <p class="system-desc">Real-time social platform for train travelers. Train search, buddy matching, friend requests, and secure auth for 100+ concurrent users.</p>
+                    
+                    <div class="system-arch">
+                        <div class="arch-item">
+                            <span class="arch-label">Frontend:</span>
+                            <span class="arch-value">React.js + Tailwind</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Backend:</span>
+                            <span class="arch-value">Node.js + Express</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Database:</span>
+                            <span class="arch-value">MongoDB</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Auth:</span>
+                            <span class="arch-value">JWT</span>
+                        </div>
+                    </div>
+
+                    <div class="system-tags">
+                        <span class="sys-tag">React.js</span>
+                        <span class="sys-tag">Node.js</span>
+                        <span class="sys-tag">MongoDB</span>
+                        <span class="sys-tag">JWT</span>
+                    </div>
+
+                    <div class="system-links">
+                        <a href="https://trainbuddy.onrender.com/" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fas fa-play-circle"></i> LIVE DEMO
+                        </a>
+                        <a href="https://github.com/saketmishra7224/BuddyOnTrain" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fab fa-github"></i> Repo
+                        </a>
+                    </div>
+                </div>
+
+                <!-- System Card 5 -->
+                <div class="system-card">
+                    <div class="system-image">
+                        <img src="/assets/svalinn.png" alt="Svalinn Chrome Extension" />
+                    </div>
+                    <div class="system-status-bar">
+                        <span class="status-indicator running"></span>
+                        <span class="status-text">RUNNING</span>
+                    </div>
+                    <h3 class="system-name">Svalinn</h3>
+                    <p class="system-desc">Chrome extension for focus enhancement with password-protected site blocking. Local storage for credentials. 100+ active users, 4.8/5 rating.</p>
+                    
+                    <div class="system-arch">
+                        <div class="arch-item">
+                            <span class="arch-label">Platform:</span>
+                            <span class="arch-value">Chrome Extension</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Language:</span>
+                            <span class="arch-value">JavaScript</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">APIs:</span>
+                            <span class="arch-value">Chrome API</span>
+                        </div>
+                        <div class="arch-item">
+                            <span class="arch-label">Storage:</span>
+                            <span class="arch-value">Local Storage</span>
+                        </div>
+                    </div>
+
+                    <div class="system-tags">
+                        <span class="sys-tag">JavaScript</span>
+                        <span class="sys-tag">Chrome API</span>
+                        <span class="sys-tag">Extension</span>
+                    </div>
+
+                    <div class="system-links">
+                        <a href="https://chromewebstore.google.com/detail/svalinn/aikbllpnjoaiabkibdddehegojiiehal" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fas fa-play-circle"></i> Store
+                        </a>
+                        <a href="https://github.com/saketmishra7224/Svalinn" target="_blank" rel="noopener" class="sys-link">
+                            <i class="fab fa-github"></i> Repo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SECTION 5: ENGINEERING TIMELINE
+    ======================================== -->
+    <section id="timeline" class="engineering-timeline">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-bracket">{'</span>
+                    <span>ENGINEERING.TIMELINE</span>
+                    <span class="title-bracket">'}</span>
+                </h2>
+                <div class="section-path">~/experience/chronological</div>
+            </div>
+
+            <div class="timeline">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Front-End Developer Intern</h3>
+                            <span class="timeline-company">CultureVo (NoviFE Platform)</span>
+                        </div>
+                        <div class="timeline-period">
+                            <i class="far fa-calendar"></i>
+                            May 2025 - October 2025
+                        </div>
+                        <div class="timeline-desc">
+                            <p><strong>System Built:</strong> Complete frontend for NoviFE, AI cultural companion platform</p>
+                            <ul class="timeline-list">
+                                <li><strong>Scale:</strong> Engaging 1000+ users across 50+ global AI personalities</li>
+                                <li><strong>Tech:</strong> Next.js 15, React 19, Tailwind CSS</li>
+                                <li><strong>Architecture:</strong> Responsive PWA with real-time API integration</li>
+                                <li><strong>Impact:</strong> Delivered production-ready frontend powering multi-personality AI interactions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Member - NextTech Lab</h3>
+                            <span class="timeline-company">SRM University AP</span>
+                        </div>
+                        <div class="timeline-period">
+                            <i class="far fa-calendar"></i>
+                            Feb 2025 - Aug 2025
+                        </div>
+                        <div class="timeline-desc">
+                            <p><strong>Focus:</strong> AI-driven prototypes and real-time API integration</p>
+                            <ul class="timeline-list">
+                                <li><strong>Development:</strong> Designed and built AI prototypes with live API integration</li>
+                                <li><strong>Mentorship:</strong> Guided 3+ junior developers in full-stack development</li>
+                                <li><strong>Methodology:</strong> Agile workflows, improved sprint velocity through collaboration</li>
+                                <li><strong>Impact:</strong> Accelerated lab's project delivery through technical leadership</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>B.Tech Computer Science</h3>
+                            <span class="timeline-company">SRM University AP</span>
+                        </div>
+                        <div class="timeline-period">
+                            <i class="far fa-calendar"></i>
+                            Aug 2023 - May 2027
+                        </div>
+                        <div class="timeline-desc">
+                            <p><strong>Specialization:</strong> Full-stack development, AI integration, distributed systems</p>
+                            <ul class="timeline-list">
+                                <li><strong>Projects:</strong> 5+ production systems deployed across MERN stack and AI domains</li>
+                                <li><strong>Achievements:</strong> Hackathon success, real-world deployment experience</li>
+                                <li><strong>Skills:</strong> System design, API architecture, scalable backend development</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         SECTION 6: ENDPOINTS / CONTACT
+    ======================================== -->
+    <section id="endpoints" class="endpoints">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-bracket">{'</span>
+                    <span>ENDPOINTS</span>
+                    <span class="title-bracket">'}</span>
+                </h2>
+                <div class="section-path">~/connect/available_channels</div>
+            </div>
+
+            <div class="endpoints-grid">
+                <!-- Endpoint: GitHub -->
+                <div class="endpoint-card">
+                    <div class="endpoint-icon"><i class="fab fa-github"></i></div>
+                    <div class="endpoint-info">
+                        <div class="endpoint-label">GET /github</div>
+                        <div class="endpoint-desc">Source code, repositories, contributions</div>
+                        <a href="https://github.com/saketmishra7224" target="_blank" rel="noopener" class="endpoint-link">
+                            github.com/saketmishra7224
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Endpoint: LinkedIn -->
+                <div class="endpoint-card">
+                    <div class="endpoint-icon"><i class="fab fa-linkedin"></i></div>
+                    <div class="endpoint-info">
+                        <div class="endpoint-label">GET /linkedin</div>
+                        <div class="endpoint-desc">Professional network, experience, endorsements</div>
+                        <a href="https://linkedin.com/in/saket-mishra-1a1b312a1" target="_blank" rel="noopener" class="endpoint-link">
+                            linkedin.com/in/saket-mishra
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Endpoint: Email -->
+                <div class="endpoint-card">
+                    <div class="endpoint-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="endpoint-info">
+                        <div class="endpoint-label">POST /email</div>
+                        <div class="endpoint-desc">Direct communication, collaboration inquiries</div>
+                        <a href="mailto:saketmishra9476@gmail.com" class="endpoint-link">
+                            saketmishra9476@gmail.com
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Endpoint: Instagram -->
+                <div class="endpoint-card">
+                    <div class="endpoint-icon"><i class="fab fa-instagram"></i></div>
+                    <div class="endpoint-info">
+                        <div class="endpoint-label">GET /instagram</div>
+                        <div class="endpoint-desc">Personal updates, creative content</div>
+                        <a href="https://www.instagram.com/saketmishra.99/" target="_blank" rel="noopener" class="endpoint-link">
+                            @saketmishra.99
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Endpoint: Phone -->
+                <div class="endpoint-card">
+                    <div class="endpoint-icon"><i class="fas fa-phone"></i></div>
+                    <div class="endpoint-info">
+                        <div class="endpoint-label">CALL /phone</div>
+                        <div class="endpoint-desc">Voice communication, urgent matters</div>
+                        <a href="tel:+919569778960" class="endpoint-link">
+                            +91 9569778960
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Endpoint: Location -->
+                <div class="endpoint-card">
+                    <div class="endpoint-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="endpoint-info">
+                        <div class="endpoint-label">GET /location</div>
+                        <div class="endpoint-desc">Geographic coordinates, timezone</div>
+                        <div class="endpoint-link endpoint-static">
+                            Mangalgiri, Andhra Pradesh, India
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+    <footer class="system-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="footer-brand">
+                        <span class="brand-bracket">[</span>
+                        <span>SAKET.MISHRA</span>
+                        <span class="brand-bracket">]</span>
+                    </div>
+                    <div class="footer-status">
+                        <span class="status-dot"></span>
+                        <span>System operational</span>
+                    </div>
+                </div>
+                <div class="footer-center">
+                    <div class="footer-nav">
+                        <a href="#system">System</a>
+                        <a href="#profile">Profile</a>
+                        <a href="#stack">Stack</a>
+                        <a href="#systems">Systems</a>
+                        <a href="#timeline">Timeline</a>
+                        <a href="#endpoints">Endpoints</a>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-copyright">
+                        © 2025 Saket Mishra
+                    </div>
+                    <div class="footer-version">v2.0.0</div>
+                </div>
+            </div>
+        </div>
     </footer>
 
+    <!-- Scroll Progress Indicator -->
     <div id="scroll-progress"></div>
 
+    <!-- Back to Top -->
     <button id="back-to-top" aria-label="Back to Top">
-      <i class="fas fa-arrow-up"></i>
+        <i class="fas fa-arrow-up"></i>
     </button>
 
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
