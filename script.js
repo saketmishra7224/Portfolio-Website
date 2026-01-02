@@ -661,6 +661,53 @@ class PortfolioSystem {
 }
 
 // ========================================
+// VIDEO MODAL FUNCTIONS
+// ========================================
+function openVideoModal(event, videoId) {
+    event.preventDefault();
+    const modal = document.getElementById('videoModal');
+    const videoFrame = document.getElementById('videoFrame');
+    
+    // Set the YouTube embed URL with autoplay
+    videoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    modal.style.display = 'flex';
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal() {
+    const modal = document.getElementById('videoModal');
+    const videoFrame = document.getElementById('videoFrame');
+    
+    // Stop the video by removing the src
+    videoFrame.src = '';
+    modal.style.display = 'none';
+    
+    // Restore body scroll
+    document.body.style.overflow = '';
+}
+
+// Close modal when clicking outside the video
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('videoModal');
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeVideoModal();
+            }
+        });
+    }
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeVideoModal();
+        }
+    });
+});
+
+// ========================================
 // START THE SYSTEM
 // ========================================
 const portfolioSystem = new PortfolioSystem();

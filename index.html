@@ -539,6 +539,9 @@
                         <a href="https://github.com/saketmishra7224/Calmify" target="_blank" rel="noopener" class="sys-link">
                             <i class="fab fa-github"></i> Repo
                         </a>
+                        <a href="#" class="sys-link" onclick="openVideoModal(event, '-mbgNO0BbEo')">
+                            <i class="fas fa-video"></i> VIDEO DEMO
+                        </a>
                     </div>
                 </div>
 
@@ -551,8 +554,8 @@
                         <span class="status-indicator running"></span>
                         <span class="status-text">RUNNING</span>
                     </div>
-                    <h3 class="system-name">RunDown</h3>
-                    <p class="system-desc">AI task automation using Gemini API for email parsing and calendar integration. 90% classification accuracy across 1000+ emails per user.</p>
+                    <h3 class="system-name">RunDown - AI Task Manager</h3>
+                    <p class="system-desc">Intelligent task management system with Azure OpenAI for automatic event extraction from Outlook emails. Features NLP-powered conversational task creation, smart deadline detection, and seamless calendar sync via Microsoft Graph API.</p>
                     
                     <div class="system-arch">
                         <div class="arch-item">
@@ -561,11 +564,11 @@
                         </div>
                         <div class="arch-item">
                             <span class="arch-label">AI:</span>
-                            <span class="arch-value">Gemini API</span>
+                            <span class="arch-value">Azure OpenAI</span>
                         </div>
                         <div class="arch-item">
                             <span class="arch-label">APIs:</span>
-                            <span class="arch-value">Gmail + Calendar</span>
+                            <span class="arch-value">Microsoft Graph</span>
                         </div>
                         <div class="arch-item">
                             <span class="arch-label">Auth:</span>
@@ -574,10 +577,10 @@
                     </div>
 
                     <div class="system-tags">
-                        <span class="sys-tag">Python</span>
                         <span class="sys-tag">Flask</span>
-                        <span class="sys-tag">Gemini</span>
-                        <span class="sys-tag">OAuth</span>
+                        <span class="sys-tag">Azure OpenAI</span>
+                        <span class="sys-tag">MS Graph</span>
+                        <span class="sys-tag">OAuth 2.0</span>
                     </div>
 
                     <div class="system-links">
@@ -916,6 +919,16 @@
     <button id="back-to-top" aria-label="Back to Top">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <span class="video-close" onclick="closeVideoModal()">&times;</span>
+            <div class="video-container">
+                <iframe id="videoFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
