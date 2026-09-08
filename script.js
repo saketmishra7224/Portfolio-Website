@@ -1182,11 +1182,13 @@ class PerformanceMonitor {
         // Log performance metrics
         window.addEventListener('load', () => {
             setTimeout(() => {
-                const perfData = performance.getEntriesByType('navigation')[0];
-                if (perfData) {
-                    console.log('%cPerformance Metrics:', 'color: #10b981; font-weight: bold;');
-                    console.log(`%cPage Load: ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`, 'color: #cbd5e1;');
-                    console.log(`%cDOM Ready: ${Math.round(perfData.domContentLoadedEventEnd - perfData.fetchStart)}ms`, 'color: #cbd5e1;');
+                if (typeof performance !== 'undefined' && typeof performance.getEntriesByType === 'function') {
+                    const perfData = performance.getEntriesByType('navigation')[0];
+                    if (perfData) {
+                        console.log('%cPerformance Metrics:', 'color: #10b981; font-weight: bold;');
+                        console.log(`%cPage Load: ${Math.round(perfData.loadEventEnd - perfData.fetchStart)}ms`, 'color: #cbd5e1;');
+                        console.log(`%cDOM Ready: ${Math.round(perfData.domContentLoadedEventEnd - perfData.fetchStart)}ms`, 'color: #cbd5e1;');
+                    }
                 }
             }, 0);
         });
