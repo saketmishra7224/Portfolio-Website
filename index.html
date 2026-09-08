@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0f14" />
+    <meta name="color-scheme" content="dark" />
     <title>Saket Mishra</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
@@ -25,6 +27,7 @@
                 <li><a href="#system" data-section="boot">$ system</a></li>
                 <li><a href="#profile" data-section="profile">$ profile</a></li>
                 <li><a href="#stack" data-section="stack">$ stack</a></li>
+                <li><a href="#architecture" data-section="architecture">$ architecture</a></li>
                 <li><a href="#systems" data-section="systems">$ systems</a></li>
                 <li><a href="#timeline" data-section="timeline">$ timeline</a></li>
                 <li><a href="#endpoints" data-section="endpoints">$ endpoints</a></li>
@@ -97,6 +100,51 @@
                     <i class="fas fa-terminal"></i>
                     <span>connect()</span>
                 </a>
+            </div>
+
+            <!-- System Status Component -->
+            <div class="system-status-widget" id="system-status-widget" aria-label="System status telemetry">
+                <div class="ssw-header">
+                    <div class="ssw-title-wrap">
+                        <span class="ssw-bracket">[</span>
+                        <span class="ssw-title">SYSTEM STATUS</span>
+                        <span class="ssw-bracket">]</span>
+                    </div>
+                    <div class="ssw-online-badge">
+                        <span class="status-dot"></span>
+                        <span class="ssw-online-text">ONLINE</span>
+                    </div>
+                </div>
+
+                <div class="ssw-grid">
+                    <div class="ssw-row">
+                        <span class="ssw-label">PORTFOLIO</span>
+                        <span class="ssw-dots" aria-hidden="true"></span>
+                        <span class="ssw-value ssw-val-green"><i class="fas fa-check-circle" aria-hidden="true"></i> OPERATIONAL</span>
+                    </div>
+                    <div class="ssw-row">
+                        <span class="ssw-label">PROJECTS</span>
+                        <span class="ssw-dots" aria-hidden="true"></span>
+                        <span class="ssw-value ssw-val-cyan"><i class="fas fa-bolt" aria-hidden="true"></i> ACTIVE</span>
+                    </div>
+                    <div class="ssw-row">
+                        <span class="ssw-label">API</span>
+                        <span class="ssw-dots" aria-hidden="true"></span>
+                        <span class="ssw-value ssw-val-blue"><i class="fas fa-network-wired" aria-hidden="true"></i> CONNECTED</span>
+                    </div>
+                    <div class="ssw-row">
+                        <span class="ssw-label">BUILD</span>
+                        <span class="ssw-dots" aria-hidden="true"></span>
+                        <span class="ssw-value ssw-val-green"><i class="fas fa-shield-alt" aria-hidden="true"></i> STABLE</span>
+                    </div>
+                </div>
+
+                <div class="ssw-footer">
+                    <span class="ssw-telemetry-tag">
+                        <i class="fas fa-info-circle" aria-hidden="true"></i> STATIC PORTFOLIO SPECIFICATION
+                    </span>
+                    <span class="ssw-uptime" id="ssw-session-uptime">SESSION: 00:00:00</span>
+                </div>
             </div>
         </div>
     </section>
@@ -226,6 +274,28 @@
                     <span class="title-bracket">'}</span>
                 </h2>
                 <div class="section-path">~/dependencies/installed</div>
+            <div class="stack-filters" role="tablist" aria-label="Filter Tech Stack by Category">
+                <button class="stack-filter-btn active" data-filter="all" role="tab" aria-selected="true" tabindex="0">
+                    <i class="fas fa-th-large" aria-hidden="true"></i> ALL
+                </button>
+                <button class="stack-filter-btn" data-filter="languages" role="tab" aria-selected="false" tabindex="-1">
+                    <i class="fas fa-code" aria-hidden="true"></i> LANGUAGES
+                </button>
+                <button class="stack-filter-btn" data-filter="frontend" role="tab" aria-selected="false" tabindex="-1">
+                    <i class="fab fa-react" aria-hidden="true"></i> FRONTEND
+                </button>
+                <button class="stack-filter-btn" data-filter="backend" role="tab" aria-selected="false" tabindex="-1">
+                    <i class="fab fa-node-js" aria-hidden="true"></i> BACKEND
+                </button>
+                <button class="stack-filter-btn" data-filter="database" role="tab" aria-selected="false" tabindex="-1">
+                    <i class="fas fa-database" aria-hidden="true"></i> DATABASE
+                </button>
+                <button class="stack-filter-btn" data-filter="ai" role="tab" aria-selected="false" tabindex="-1">
+                    <i class="fas fa-brain" aria-hidden="true"></i> AI / ML
+                </button>
+                <button class="stack-filter-btn" data-filter="tools" role="tab" aria-selected="false" tabindex="-1">
+                    <i class="fas fa-tools" aria-hidden="true"></i> TOOLS
+                </button>
             </div>
 
             <div class="stack-grid">
@@ -429,6 +499,272 @@
     </section>
 
     <!-- ========================================
+         SECTION: SYSTEM ARCHITECTURE
+    ======================================== -->
+    <section id="architecture" class="system-architecture">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="title-bracket">{'</span>
+                    <span>SYSTEM.ARCHITECTURE</span>
+                    <span class="title-bracket">'}</span>
+                </h2>
+                <div class="section-path">~/architecture/topology</div>
+            </div>
+
+            <div class="arch-layout">
+                <!-- Left: Visual Architecture Topology Pipeline -->
+                <div class="arch-graph-pane">
+                    <div class="arch-pipeline">
+                        <!-- TIER 1: USER / CLIENTS -->
+                        <div class="arch-tier" data-tier="1">
+                            <div class="arch-tier-header">
+                                <span class="arch-tier-index">01</span>
+                                <span class="arch-tier-title">USER / CLIENTS</span>
+                                <span class="arch-tier-proto">HTTP • WSS • IPC</span>
+                            </div>
+                            <div class="arch-tier-nodes">
+                                <div class="arch-node" data-node-id="user-web">
+                                    <div class="an-icon"><i class="fas fa-globe"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Web & Mobile Browsers</div>
+                                        <div class="an-meta">Responsive Clients • SPA</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="user-ext">
+                                    <div class="an-icon"><i class="fab fa-chrome"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Chrome Extension</div>
+                                        <div class="an-meta">Browser Sandbox • Svalinn</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="user-desktop">
+                                    <div class="an-icon"><i class="fas fa-desktop"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Desktop Workstation</div>
+                                        <div class="an-meta">Swing / JFrame GUI</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="arch-flow-connector"><i class="fas fa-angle-double-down"></i></div>
+
+                        <!-- TIER 2: FRONTEND LAYER -->
+                        <div class="arch-tier" data-tier="2">
+                            <div class="arch-tier-header">
+                                <span class="arch-tier-index">02</span>
+                                <span class="arch-tier-title">FRONTEND LAYER</span>
+                                <span class="arch-tier-proto">Virtual DOM • SSR • PWA</span>
+                            </div>
+                            <div class="arch-tier-nodes">
+                                <div class="arch-node" data-node-id="front-react">
+                                    <div class="an-icon"><i class="fab fa-react"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">React.js</div>
+                                        <div class="an-meta">Virtual DOM • Hooks</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="front-next">
+                                    <div class="an-icon"><i class="fas fa-layer-group"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Next.js 15</div>
+                                        <div class="an-meta">Hybrid SSR • App Router</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="front-tailwind">
+                                    <div class="an-icon"><i class="fas fa-palette"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Tailwind CSS</div>
+                                        <div class="an-meta">JIT Utility Architecture</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="arch-flow-connector"><i class="fas fa-angle-double-down"></i></div>
+
+                        <!-- TIER 3: API / REAL-TIME LAYER -->
+                        <div class="arch-tier" data-tier="3">
+                            <div class="arch-tier-header">
+                                <span class="arch-tier-index">03</span>
+                                <span class="arch-tier-title">API / REAL-TIME LAYER</span>
+                                <span class="arch-tier-proto">REST • WebSockets • OAuth2</span>
+                            </div>
+                            <div class="arch-tier-nodes">
+                                <div class="arch-node" data-node-id="api-rest">
+                                    <div class="an-icon"><i class="fas fa-network-wired"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">RESTful APIs</div>
+                                        <div class="an-meta">JSON Schemas • CORS</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="api-socket">
+                                    <div class="an-icon"><i class="fas fa-bolt"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Socket.IO (WSS)</div>
+                                        <div class="an-meta">500+ msgs/day • Real-Time</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="api-auth">
+                                    <div class="an-icon"><i class="fas fa-shield-alt"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">JWT Security</div>
+                                        <div class="an-meta">Bearer Tokens • RBAC</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="api-graph">
+                                    <div class="an-icon"><i class="fab fa-microsoft"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Microsoft Graph</div>
+                                        <div class="an-meta">Outlook & Calendar Sync</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="arch-flow-connector"><i class="fas fa-angle-double-down"></i></div>
+
+                        <!-- TIER 4: BACKEND LAYER -->
+                        <div class="arch-tier" data-tier="4">
+                            <div class="arch-tier-header">
+                                <span class="arch-tier-index">04</span>
+                                <span class="arch-tier-title">BACKEND LAYER</span>
+                                <span class="arch-tier-proto">Async Event Loop • WSGI • MVC</span>
+                            </div>
+                            <div class="arch-tier-nodes">
+                                <div class="arch-node" data-node-id="back-node">
+                                    <div class="an-icon"><i class="fab fa-node-js"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Node.js + Express</div>
+                                        <div class="an-meta">Non-Blocking Microservices</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="back-flask">
+                                    <div class="an-icon"><i class="fab fa-python"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Python Flask</div>
+                                        <div class="an-meta">NLP & Parsing Service</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="back-java">
+                                    <div class="an-icon"><i class="fab fa-java"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Java Logic</div>
+                                        <div class="an-meta">MVC • JDBC Transactions</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="arch-flow-connector"><i class="fas fa-angle-double-down"></i></div>
+
+                        <!-- TIER 5: DATABASE & EXTERNAL SERVICES -->
+                        <div class="arch-tier" data-tier="5">
+                            <div class="arch-tier-header">
+                                <span class="arch-tier-index">05</span>
+                                <span class="arch-tier-title">DATABASE & EXTERNAL SERVICES</span>
+                                <span class="arch-tier-proto">NoSQL • ACID SQL • Local Storage</span>
+                            </div>
+                            <div class="arch-tier-nodes">
+                                <div class="arch-node" data-node-id="db-mongo">
+                                    <div class="an-icon"><i class="fas fa-database"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">MongoDB Atlas</div>
+                                        <div class="an-meta">Mongoose ODM • Documents</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="db-mysql">
+                                    <div class="an-icon"><i class="fas fa-table"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">MySQL Database</div>
+                                        <div class="an-meta">ACID Relational JDBC</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="db-local">
+                                    <div class="an-icon"><i class="fas fa-lock"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Chrome Storage</div>
+                                        <div class="an-meta">Zero-Tracking Local</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="ext-render">
+                                    <div class="an-icon"><i class="fas fa-cloud"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Render Cloud</div>
+                                        <div class="an-meta">Production CI/CD Deploy</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="arch-flow-connector"><i class="fas fa-angle-double-down"></i></div>
+
+                        <!-- TIER 6: AI & AUTOMATION LAYER -->
+                        <div class="arch-tier" data-tier="6">
+                            <div class="arch-tier-header">
+                                <span class="arch-tier-index">06</span>
+                                <span class="arch-tier-title">AI & AUTOMATION LAYER</span>
+                                <span class="arch-tier-proto">LLM Inference • NLP Extraction</span>
+                            </div>
+                            <div class="arch-tier-nodes">
+                                <div class="arch-node" data-node-id="ai-azure">
+                                    <div class="an-icon"><i class="fas fa-brain"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Azure OpenAI</div>
+                                        <div class="an-meta">LLM Prompt Streams</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="ai-gemini">
+                                    <div class="an-icon"><i class="fas fa-robot"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Gemini API</div>
+                                        <div class="an-meta">Multimodal Prototyping</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                                <div class="arch-node" data-node-id="ai-pipeline">
+                                    <div class="an-icon"><i class="fas fa-calendar-check"></i></div>
+                                    <div class="an-info">
+                                        <div class="an-name">Extraction Pipeline</div>
+                                        <div class="an-meta">Automated Date Parsing</div>
+                                    </div>
+                                    <span class="an-dot"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Live System Telemetry Inspector -->
+                <div class="arch-inspector-pane">
+                    <div class="arch-inspector">
+                        <!-- Populated dynamically by architecture.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================
          SECTION 4: ALL SYSTEMS (Projects Grid)
     ======================================== -->
     <section id="systems" class="all-systems">
@@ -481,12 +817,16 @@
                         <span class="sys-tag">REST API</span>
                     </div>
 
+                    <button class="sys-details-btn" data-project="Portfolio Generator" aria-label="View Portfolio Generator details">
+                        <i class="fas fa-microchip" aria-hidden="true"></i> View System Details
+                    </button>
+
                     <div class="system-links">
-                        <a href="https://portfolio-generator-4z89.onrender.com/" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fas fa-play-circle"></i> LIVE DEMO
+                        <a href="https://portfolio-generator-4z89.onrender.com/" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-live">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> LIVE DEMO
                         </a>
-                        <a href="https://github.com/saketmishra7224/Portfolio-Generator" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fab fa-github"></i> Repo
+                        <a href="https://github.com/saketmishra7224/Portfolio-Generator" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-github">
+                            <i class="fab fa-github" aria-hidden="true"></i> GitHub
                         </a>
                     </div>
                 </div>
@@ -529,15 +869,19 @@
                         <span class="sys-tag">Socket.IO</span>
                     </div>
 
+                    <button class="sys-details-btn" data-project="Calmify" aria-label="View Calmify details">
+                        <i class="fas fa-microchip" aria-hidden="true"></i> View System Details
+                    </button>
+
                     <div class="system-links">
-                        <a href="https://calmify-frontend-363o.onrender.com/" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fas fa-play-circle"></i> LIVE DEMO
+                        <a href="https://calmify-frontend-363o.onrender.com/" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-live">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> LIVE DEMO
                         </a>
-                        <a href="https://github.com/saketmishra7224/Calmify" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fab fa-github"></i> Repo
+                        <a href="https://github.com/saketmishra7224/Calmify" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-github">
+                            <i class="fab fa-github" aria-hidden="true"></i> GitHub
                         </a>
-                        <a href="#" class="sys-link" onclick="openVideoModal(event, '-mbgNO0BbEo')">
-                            <i class="fas fa-video"></i> VIDEO DEMO
+                        <a href="#" class="sys-link sys-link-video" onclick="openVideoModal(event, '-mbgNO0BbEo')">
+                            <i class="fas fa-video" aria-hidden="true"></i> VIDEO DEMO
                         </a>
                     </div>
                 </div>
@@ -580,12 +924,16 @@
                         <span class="sys-tag">OAuth 2.0</span>
                     </div>
 
+                    <button class="sys-details-btn" data-project="RunDown - AI Task Manager" aria-label="View RunDown details">
+                        <i class="fas fa-microchip" aria-hidden="true"></i> View System Details
+                    </button>
+
                     <div class="system-links">
-                        <a href="https://rundown-sx8n.onrender.com/" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fas fa-play-circle"></i> LIVE DEMO
+                        <a href="https://rundown-sx8n.onrender.com/" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-live">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> LIVE DEMO
                         </a>
-                        <a href="https://github.com/saketmishra7224/RUNDOWN" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fab fa-github"></i> Repo
+                        <a href="https://github.com/saketmishra7224/RUNDOWN" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-github">
+                            <i class="fab fa-github" aria-hidden="true"></i> GitHub
                         </a>
                     </div>
                 </div>
@@ -628,12 +976,16 @@
                         <span class="sys-tag">JWT</span>
                     </div>
 
+                    <button class="sys-details-btn" data-project="BuddyOnTrain" aria-label="View BuddyOnTrain details">
+                        <i class="fas fa-microchip" aria-hidden="true"></i> View System Details
+                    </button>
+
                     <div class="system-links">
-                        <a href="https://trainbuddy.onrender.com/" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fas fa-play-circle"></i> LIVE DEMO
+                        <a href="https://trainbuddy.onrender.com/" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-live">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> LIVE DEMO
                         </a>
-                        <a href="https://github.com/saketmishra7224/BuddyOnTrain" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fab fa-github"></i> Repo
+                        <a href="https://github.com/saketmishra7224/BuddyOnTrain" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-github">
+                            <i class="fab fa-github" aria-hidden="true"></i> GitHub
                         </a>
                     </div>
                 </div>
@@ -675,12 +1027,16 @@
                         <span class="sys-tag">Extension</span>
                     </div>
 
+                    <button class="sys-details-btn" data-project="Svalinn" aria-label="View Svalinn details">
+                        <i class="fas fa-microchip" aria-hidden="true"></i> View System Details
+                    </button>
+
                     <div class="system-links">
-                        <a href="https://chromewebstore.google.com/detail/svalinn/aikbllpnjoaiabkibdddehegojiiehal" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fas fa-play-circle"></i> Store
+                        <a href="https://chromewebstore.google.com/detail/svalinn/aikbllpnjoaiabkibdddehegojiiehal" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-live">
+                            <i class="fas fa-external-link-alt" aria-hidden="true"></i> Live Demo
                         </a>
-                        <a href="https://github.com/saketmishra7224/Svalinn" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fab fa-github"></i> Repo
+                        <a href="https://github.com/saketmishra7224/Svalinn" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-github">
+                            <i class="fab fa-github" aria-hidden="true"></i> GitHub
                         </a>
                     </div>
                 </div>
@@ -723,9 +1079,13 @@
                         <span class="sys-tag">MySQL</span>
                     </div>
 
+                    <button class="sys-details-btn" data-project="Employee Management System" aria-label="View Employee Management System details">
+                        <i class="fas fa-microchip" aria-hidden="true"></i> View System Details
+                    </button>
+
                     <div class="system-links">
-                        <a href="https://github.com/saketmishra7224/Employee-Management-System-Java-" target="_blank" rel="noopener" class="sys-link">
-                            <i class="fab fa-github"></i> Repo
+                        <a href="https://github.com/saketmishra7224/Employee-Management-System-Java-" target="_blank" rel="noopener noreferrer" class="sys-link sys-link-github">
+                            <i class="fab fa-github" aria-hidden="true"></i> GitHub
                         </a>
                     </div>
                 </div>
@@ -747,74 +1107,243 @@
                 <div class="section-path">~/experience/chronological</div>
             </div>
 
-            <div class="timeline">
+            <div class="timeline" id="timeline-container">
+                <!-- Dynamic Animated Progress Rail -->
+                <div class="timeline-rail-track">
+                    <div class="timeline-rail-fill" id="timeline-rail-fill"></div>
+                </div>
+
                 <!-- Timeline Item 1 -->
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
+                <div class="timeline-item is-expanded" data-index="0">
+                    <div class="timeline-marker">
+                        <span class="tm-dot"></span>
+                        <span class="tm-ping"></span>
+                    </div>
                     <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Front-End Developer Intern</h3>
-                            <span class="timeline-company">CultureVo (NoviFE Platform)</span>
+                        <!-- Collapsed Summary Bar: DATE -> ROLE -> COMPANY -->
+                        <div class="timeline-summary" role="button" tabindex="0" aria-expanded="true" aria-controls="drawer-0">
+                            <div class="ts-badge-wrap">
+                                <span class="ts-date"><i class="far fa-calendar-alt"></i> May 2025 – Oct 2025</span>
+                            </div>
+                            <span class="ts-arrow"><i class="fas fa-arrow-right"></i></span>
+                            <span class="ts-role">Front-End Developer Intern</span>
+                            <span class="ts-arrow"><i class="fas fa-arrow-right"></i></span>
+                            <span class="ts-company">CultureVo (NoviFE Platform)</span>
+                            <div class="ts-toggle">
+                                <span class="toggle-text">Details</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
                         </div>
-                        <div class="timeline-period">
-                            <i class="far fa-calendar"></i>
-                            May 2025 - October 2025
-                        </div>
-                        <div class="timeline-desc">
-                            <p><strong>System Built:</strong> Complete frontend for NoviFE, AI cultural companion platform</p>
-                            <ul class="timeline-list">
-                                <li><strong>Scale:</strong> Engaging 1000+ users across 50+ global AI personalities</li>
-                                <li><strong>Tech:</strong> Next.js 15, React 19, Tailwind CSS</li>
-                                <li><strong>Architecture:</strong> Responsive PWA with real-time API integration</li>
-                                <li><strong>Impact:</strong> Delivered production-ready frontend powering multi-personality AI interactions</li>
-                            </ul>
+
+                        <!-- Expandable Drawer -->
+                        <div class="timeline-drawer" id="drawer-0">
+                            <div class="timeline-drawer-inner">
+                                <!-- Systems & Features Built -->
+                                <div class="t-section t-system">
+                                    <h4 class="t-sub-title"><i class="fas fa-cubes"></i> System / Feature Built</h4>
+                                    <p class="t-system-desc">
+                                        Architected and built the complete frontend for <strong>NoviFE</strong>, an AI-powered cultural companion platform. Engineered as a high-performance, responsive Progressive Web App (PWA) with real-time API integrations.
+                                    </p>
+                                </div>
+
+                                <!-- Measurable Impact -->
+                                <div class="t-section t-impact">
+                                    <h4 class="t-sub-title"><i class="fas fa-chart-line"></i> Measurable Impact</h4>
+                                    <div class="t-metrics-grid">
+                                        <div class="t-metric-chip">
+                                            <span class="tm-val">1000+</span>
+                                            <span class="tm-lbl">Active Users Engaged</span>
+                                        </div>
+                                        <div class="t-metric-chip">
+                                            <span class="tm-val">50+</span>
+                                            <span class="tm-lbl">Global AI Personalities</span>
+                                        </div>
+                                        <div class="t-metric-chip">
+                                            <span class="tm-val">Production PWA</span>
+                                            <span class="tm-lbl">Delivered Multi-Personality AI Interactions</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Responsibilities & Architecture -->
+                                <div class="t-section t-responsibilities">
+                                    <h4 class="t-sub-title"><i class="fas fa-tasks"></i> Responsibilities & Architecture</h4>
+                                    <ul class="t-resp-list">
+                                        <li>Architected modular Next.js component system with declarative state and real-time API synchronization.</li>
+                                        <li>Engineered responsive mobile-first PWA caching and service workers for rapid interactive rendering.</li>
+                                        <li>Collaborated on multi-personality AI prompt flows to power smooth conversational interfaces.</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Technologies Applied -->
+                                <div class="t-section t-tech">
+                                    <h4 class="t-sub-title"><i class="fas fa-microchip"></i> Technologies Applied</h4>
+                                    <div class="t-tech-badges">
+                                        <span class="t-badge">Next.js 15</span>
+                                        <span class="t-badge">React 19</span>
+                                        <span class="t-badge">Tailwind CSS</span>
+                                        <span class="t-badge">PWA Service Workers</span>
+                                        <span class="t-badge">REST APIs</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Timeline Item 2 -->
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
+                <div class="timeline-item" data-index="1">
+                    <div class="timeline-marker">
+                        <span class="tm-dot"></span>
+                        <span class="tm-ping"></span>
+                    </div>
                     <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Member - NextTech Lab</h3>
-                            <span class="timeline-company">SRM University AP</span>
+                        <!-- Collapsed Summary Bar: DATE -> ROLE -> COMPANY -->
+                        <div class="timeline-summary" role="button" tabindex="0" aria-expanded="false" aria-controls="drawer-1">
+                            <div class="ts-badge-wrap">
+                                <span class="ts-date"><i class="far fa-calendar-alt"></i> Feb 2025 – Aug 2025</span>
+                            </div>
+                            <span class="ts-arrow"><i class="fas fa-arrow-right"></i></span>
+                            <span class="ts-role">Member - NextTech Lab</span>
+                            <span class="ts-arrow"><i class="fas fa-arrow-right"></i></span>
+                            <span class="ts-company">SRM University AP</span>
+                            <div class="ts-toggle">
+                                <span class="toggle-text">Details</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
                         </div>
-                        <div class="timeline-period">
-                            <i class="far fa-calendar"></i>
-                            Feb 2025 - Aug 2025
-                        </div>
-                        <div class="timeline-desc">
-                            <p><strong>Focus:</strong> AI-driven prototypes and real-time API integration</p>
-                            <ul class="timeline-list">
-                                <li><strong>Development:</strong> Designed and built AI prototypes with live API integration</li>
-                                <li><strong>Mentorship:</strong> Guided 3+ junior developers in full-stack development</li>
-                                <li><strong>Methodology:</strong> Agile workflows, improved sprint velocity through collaboration</li>
-                                <li><strong>Impact:</strong> Accelerated lab's project delivery through technical leadership</li>
-                            </ul>
+
+                        <!-- Expandable Drawer -->
+                        <div class="timeline-drawer" id="drawer-1">
+                            <div class="timeline-drawer-inner">
+                                <!-- Systems & Features Built -->
+                                <div class="t-section t-system">
+                                    <h4 class="t-sub-title"><i class="fas fa-cubes"></i> System / Feature Built</h4>
+                                    <p class="t-system-desc">
+                                        Designed and built AI-driven prototypes and full-stack applications with real-time API integrations inside SRM University AP's premier student-led research laboratory.
+                                    </p>
+                                </div>
+
+                                <!-- Measurable Impact -->
+                                <div class="t-section t-impact">
+                                    <h4 class="t-sub-title"><i class="fas fa-chart-line"></i> Measurable Impact</h4>
+                                    <div class="t-metrics-grid">
+                                        <div class="t-metric-chip">
+                                            <span class="tm-val">3+ Developers</span>
+                                            <span class="tm-lbl">Guided in Full-Stack Development</span>
+                                        </div>
+                                        <div class="t-metric-chip">
+                                            <span class="tm-val">Sprint Velocity</span>
+                                            <span class="tm-lbl">Accelerated Lab Delivery via Agile</span>
+                                        </div>
+                                        <div class="t-metric-chip">
+                                            <span class="tm-val">Live Prototypes</span>
+                                            <span class="tm-lbl">AI Models with Real-Time Streaming</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Responsibilities & Architecture -->
+                                <div class="t-section t-responsibilities">
+                                    <h4 class="t-sub-title"><i class="fas fa-tasks"></i> Responsibilities & Architecture</h4>
+                                    <ul class="t-resp-list">
+                                        <li>Designed and built functional AI prototypes with live API integration and model streaming.</li>
+                                        <li>Guided and mentored 3+ junior engineers in modern full-stack development and Git workflows.</li>
+                                        <li>Practiced Agile workflows and peer code reviews to accelerate sprint delivery.</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Technologies Applied -->
+                                <div class="t-section t-tech">
+                                    <h4 class="t-sub-title"><i class="fas fa-microchip"></i> Technologies Applied</h4>
+                                    <div class="t-tech-badges">
+                                        <span class="t-badge">AI Prototypes</span>
+                                        <span class="t-badge">REST APIs</span>
+                                        <span class="t-badge">Full Stack Architecture</span>
+                                        <span class="t-badge">Git & GitHub</span>
+                                        <span class="t-badge">Agile Sprints</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Timeline Item 3 -->
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
+                <div class="timeline-item" data-index="2">
+                    <div class="timeline-marker">
+                        <span class="tm-dot"></span>
+                        <span class="tm-ping"></span>
+                    </div>
                     <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>B.Tech Computer Science</h3>
-                            <span class="timeline-company">SRM University AP</span>
+                        <!-- Collapsed Summary Bar: DATE -> ROLE -> COMPANY -->
+                        <div class="timeline-summary" role="button" tabindex="0" aria-expanded="false" aria-controls="drawer-2">
+                            <div class="ts-badge-wrap">
+                                <span class="ts-date"><i class="far fa-calendar-alt"></i> Aug 2023 – May 2027</span>
+                            </div>
+                            <span class="ts-arrow"><i class="fas fa-arrow-right"></i></span>
+                            <span class="ts-role">B.Tech Computer Science</span>
+                            <span class="ts-arrow"><i class="fas fa-arrow-right"></i></span>
+                            <span class="ts-company">SRM University AP</span>
+                            <div class="ts-toggle">
+                                <span class="toggle-text">Details</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
                         </div>
-                        <div class="timeline-period">
-                            <i class="far fa-calendar"></i>
-                            Aug 2023 - May 2027
-                        </div>
-                        <div class="timeline-desc">
-                            <p><strong>Specialization:</strong> Full-stack development, AI integration, distributed systems</p>
-                            <ul class="timeline-list">
-                                <li><strong>Projects:</strong> 5+ production systems deployed across MERN stack and AI domains</li>
-                                <li><strong>Achievements:</strong> Hackathon success, real-world deployment experience</li>
-                                <li><strong>Skills:</strong> System design, API architecture, scalable backend development</li>
-                            </ul>
+
+                        <!-- Expandable Drawer -->
+                        <div class="timeline-drawer" id="drawer-2">
+                            <div class="timeline-drawer-inner">
+                                <!-- Systems & Features Built -->
+                                <div class="t-section t-system">
+                                    <h4 class="t-sub-title"><i class="fas fa-cubes"></i> System / Feature Built</h4>
+                                    <p class="t-system-desc">
+                                        Engineered and deployed <strong>5+ production software systems</strong> across MERN stack and AI domains (Calmify, RunDown, Portfolio Generator, BuddyOnTrain, Svalinn).
+                                    </p>
+                                </div>
+
+                                <!-- Measurable Impact -->
+                                <div class="t-section t-impact">
+                                    <h4 class="t-sub-title"><i class="fas fa-chart-line"></i> Measurable Impact</h4>
+                                    <div class="t-metrics-grid">
+                                        <div class="t-metric-chip">
+                                            <span class="tm-val">5+ Production Systems</span>
+                                            <span class="tm-lbl">Deployed to Cloud Infrastructure</span>
+                                        </div>
+                                        <div class="t-metric-chip">
+                                            <span class="tm-val">1000+ Commits</span>
+                                            <span class="tm-lbl">Across Full-Stack Repositories</span>
+                                        </div>
+                                        <div class="t-metric-chip">
+                                            <span class="tm-val">Hackathon Success</span>
+                                            <span class="tm-lbl">Real-World Deployment Experience</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Responsibilities & Focus -->
+                                <div class="t-section t-responsibilities">
+                                    <h4 class="t-sub-title"><i class="fas fa-tasks"></i> Responsibilities & Academic Specialization</h4>
+                                    <ul class="t-resp-list">
+                                        <li>Core specialization in scalable full-stack development, API architecture, and distributed microservices.</li>
+                                        <li>Deep coursework and applied system design in Data Structures, Algorithms, Operating Systems, and Relational/NoSQL databases.</li>
+                                        <li>Engineered end-to-end web applications, desktop enterprise systems, and browser extensions.</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Technologies Applied -->
+                                <div class="t-section t-tech">
+                                    <h4 class="t-sub-title"><i class="fas fa-microchip"></i> Technologies Applied</h4>
+                                    <div class="t-tech-badges">
+                                        <span class="t-badge">React & Node.js</span>
+                                        <span class="t-badge">MongoDB & MySQL</span>
+                                        <span class="t-badge">Python & Flask</span>
+                                        <span class="t-badge">Java (JDK17)</span>
+                                        <span class="t-badge">C++17</span>
+                                        <span class="t-badge">System Design</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -939,6 +1468,7 @@
                         <a href="#system">System</a>
                         <a href="#profile">Profile</a>
                         <a href="#stack">Stack</a>
+                        <a href="#architecture">Architecture</a>
                         <a href="#systems">Systems</a>
                         <a href="#timeline">Timeline</a>
                         <a href="#endpoints">Endpoints</a>
@@ -962,6 +1492,51 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
+    <!-- Persistent Floating Navigation Control -->
+    <nav id="floating-dock" class="floating-dock fd-hidden" aria-label="Floating quick navigation">
+        <div class="fd-inner">
+            <!-- Primary Section Links -->
+            <div class="fd-group fd-nav-group">
+                <a href="#profile" class="fd-link" data-section="profile" aria-label="About">
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                    <span class="fd-text">About</span>
+                </a>
+                <a href="#stack" class="fd-link" data-section="stack" aria-label="Skills">
+                    <i class="fas fa-layer-group" aria-hidden="true"></i>
+                    <span class="fd-text">Skills</span>
+                </a>
+                <a href="#systems" class="fd-link" data-section="systems" aria-label="Projects">
+                    <i class="fas fa-server" aria-hidden="true"></i>
+                    <span class="fd-text">Projects</span>
+                </a>
+                <a href="#timeline" class="fd-link" data-section="timeline" aria-label="Experience">
+                    <i class="fas fa-briefcase" aria-hidden="true"></i>
+                    <span class="fd-text">Experience</span>
+                </a>
+                <a href="#endpoints" class="fd-link" data-section="endpoints" aria-label="Contact">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <span class="fd-text">Contact</span>
+                </a>
+            </div>
+
+            <div class="fd-divider" aria-hidden="true"></div>
+
+            <!-- Quick External Actions -->
+            <div class="fd-group fd-action-group">
+                <a href="assets/Resume.pdf" target="_blank" rel="noopener" class="fd-link fd-ext" aria-label="Resume" title="Open Resume PDF">
+                    <i class="fas fa-file-alt" aria-hidden="true"></i>
+                    <span class="fd-text">Resume</span>
+                </a>
+                <a href="https://github.com/saketmishra7224" target="_blank" rel="noopener" class="fd-link fd-ext fd-icon-only" aria-label="GitHub Profile" title="GitHub">
+                    <i class="fab fa-github" aria-hidden="true"></i>
+                </a>
+                <a href="https://linkedin.com/in/saket-mishra-1a1b312a1" target="_blank" rel="noopener" class="fd-link fd-ext fd-icon-only" aria-label="LinkedIn Profile" title="LinkedIn">
+                    <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
     <!-- Video Modal -->
     <div id="videoModal" class="video-modal">
         <div class="video-modal-content">
@@ -972,6 +1547,99 @@
         </div>
     </div>
 
+    <!-- Keyboard Shortcuts Modal -->
+    <div id="shortcuts-modal" class="sc-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="sc-title" hidden>
+        <div class="sc-modal-container">
+            <div class="sc-modal-header">
+                <div class="sc-header-left">
+                    <i class="fas fa-keyboard sc-header-icon" aria-hidden="true"></i>
+                    <h2 id="sc-title" class="sc-title">Keyboard Shortcuts</h2>
+                </div>
+                <button type="button" class="sc-close-btn" id="sc-close-btn" aria-label="Close shortcuts dialog">&times;</button>
+            </div>
+            <div class="sc-modal-body">
+                <!-- Navigation Group -->
+                <div class="sc-group">
+                    <div class="sc-group-title">Navigation & Tools</div>
+                    <div class="sc-row">
+                        <span class="sc-label">Command Palette</span>
+                        <div class="sc-keys"><kbd class="sc-kbd">Ctrl</kbd><span class="sc-plus">+</span><kbd class="sc-kbd">K</kbd> <span class="sc-or">or</span> <kbd class="sc-kbd">/</kbd></div>
+                    </div>
+                    <div class="sc-row">
+                        <span class="sc-label">Keyboard Shortcuts</span>
+                        <div class="sc-keys"><kbd class="sc-kbd">?</kbd> <span class="sc-or">or</span> <kbd class="sc-kbd">Ctrl</kbd><span class="sc-plus">+</span><kbd class="sc-kbd">/</kbd></div>
+                    </div>
+                    <div class="sc-row">
+                        <span class="sc-label">Toggle Terminal</span>
+                        <div class="sc-keys"><kbd class="sc-kbd">Ctrl</kbd><span class="sc-plus">+</span><kbd class="sc-kbd">`</kbd></div>
+                    </div>
+                    <div class="sc-row">
+                        <span class="sc-label">Scroll to Top / Bottom</span>
+                        <div class="sc-keys"><kbd class="sc-kbd">Home</kbd> <span class="sc-or">/</span> <kbd class="sc-kbd">End</kbd></div>
+                    </div>
+                    <div class="sc-row">
+                        <span class="sc-label">Close Active Modal / Overlay</span>
+                        <div class="sc-keys"><kbd class="sc-kbd">Esc</kbd></div>
+                    </div>
+                </div>
+
+                <!-- Terminal Controls -->
+                <div class="sc-group">
+                    <div class="sc-group-title">Terminal Console</div>
+                    <div class="sc-row">
+                        <span class="sc-label">Autocomplete Command</span>
+                        <div class="sc-keys"><kbd class="sc-kbd">Tab</kbd></div>
+                    </div>
+                    <div class="sc-row">
+                        <span class="sc-label">Command History</span>
+                        <div class="sc-keys"><kbd class="sc-kbd">↑</kbd> <kbd class="sc-kbd">↓</kbd></div>
+                    </div>
+                    <div class="sc-row">
+                        <span class="sc-label">Clear Terminal Output</span>
+                        <div class="sc-keys"><span class="sc-cmd-tag">clear</span></div>
+                    </div>
+                </div>
+
+                <!-- Easter Eggs -->
+                <div class="sc-group">
+                    <div class="sc-group-title">Developer Easter Eggs</div>
+                    <div class="sc-row">
+                        <span class="sc-label">System Specs & Neofetch</span>
+                        <div class="sc-keys"><span class="sc-cmd-tag">neofetch</span></div>
+                    </div>
+                    <div class="sc-row">
+                        <span class="sc-label">Hiring Authorization Protocol</span>
+                        <div class="sc-keys"><span class="sc-cmd-tag">sudo hire saket</span></div>
+                    </div>
+                    <div class="sc-row">
+                        <span class="sc-label">Developer Mode (Konami Code)</span>
+                        <div class="sc-keys"><kbd class="sc-kbd">↑</kbd><kbd class="sc-kbd">↑</kbd><kbd class="sc-kbd">↓</kbd><kbd class="sc-kbd">↓</kbd><kbd class="sc-kbd">←</kbd><kbd class="sc-kbd">→</kbd><kbd class="sc-kbd">←</kbd><kbd class="sc-kbd">→</kbd><kbd class="sc-kbd">B</kbd><kbd class="sc-kbd">A</kbd></div>
+                    </div>
+                </div>
+            </div>
+            <div class="sc-modal-footer">
+                <span class="sc-footer-hint">Press <kbd class="sc-kbd">Esc</kbd> or click outside to close</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Developer Mode HUD Toast -->
+    <div id="dev-mode-toast" class="dev-mode-toast dmt-hidden" role="status" aria-live="polite">
+        <div class="dmt-content">
+            <i class="fas fa-terminal dmt-icon" aria-hidden="true"></i>
+            <div class="dmt-text">
+                <span class="dmt-title">[ACCESS GRANTED] Developer Mode Activated</span>
+                <span class="dmt-sub">Matrix green theme active • Press <kbd>Esc</kbd> or click to revert</span>
+            </div>
+        </div>
+        <button type="button" class="dmt-close" id="dmt-close-btn" aria-label="Revert Developer Mode">&times;</button>
+    </div>
+
+    <script src="architecture.js"></script>
+    <script src="stack.js"></script>
+    <script src="projects.js"></script>
+    <script src="palette.js"></script>
+    <script src="terminal.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
