@@ -282,7 +282,7 @@
             upstream: ['ai-azure', 'back-flask'],
             downstream: ['api-graph'],
             projects: ['RunDown - AI Task Manager'],
-            experience: ['SRM University AP'],
+            experience: ['Visa', 'SRM University AP'],
             rationale: 'Combines LLM intelligence with deterministic regex validation to eliminate hallucinated calendar dates.'
         }
     };

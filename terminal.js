@@ -116,6 +116,19 @@ const TERMINAL_DATA = {
 
     experience: [
         {
+            role: 'Systems Engineering Intern',
+            company: 'Visa',
+            period: 'May 2026 – July 2026',
+            details: [
+                'Engineered multi-agent automation system for AHA (Alert Handling Agreement) Review process',
+                'Built end-to-end analysis agent classifying alerts: valid, human intervention, or manual validation',
+                'Developed and integrated 10 custom MCP tools within an enterprise MCP server',
+                'Implemented parallelized batch processing (batches of 25) for high-throughput AHA review',
+                'Designed conversational interface with live stats, progress tracking, and Excel report generation',
+                'Delivered unified solution across Web UI, CLI, and Claude Code engineering workflows'
+            ]
+        },
+        {
             role: 'Front-End Developer Intern',
             company: 'CultureVo (NoviFE Platform)',
             period: 'May 2025 – October 2025',
@@ -440,7 +453,7 @@ const COMMANDS = {
                 '  <span class="itm-key">[AUTH_STEP_2]:</span> Running candidate assessment on Saket Mishra...',
                 '    <span class="itm-muted">├─</span> Technical Architecture:     <span class="itm-success">EXCELLENT (MERN Stack + Python + AI)</span>',
                 '    <span class="itm-muted">├─</span> Full Stack Competency:      <span class="itm-success">VERIFIED (React 19 / Next.js 15 / Node.js)</span>',
-                '    <span class="itm-muted">├─</span> Production Systems:         <span class="itm-success">6 DEPLOYED (CultureVo, Calmify, RunDown...)</span>',
+                '    <span class="itm-muted">├─</span> Production Systems:         <span class="itm-success">ENTERPRISE (Visa, CultureVo, Calmify, RunDown...)</span>',
                 '    <span class="itm-muted">├─</span> Measurable Impact:          <span class="itm-success">1000+ USERS ENGAGED / 50+ AI MODELS</span>',
                 '    <span class="itm-muted">└─</span> Cultural & Team Fit:        <span class="itm-success">STRONG TECHNICAL LEADERSHIP</span>',
                 '',

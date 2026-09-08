@@ -73,7 +73,7 @@
             category: 'Backend & Languages',
             role: 'Backend programming language powering Flask microservices, Outlook email extraction & AI prompt pipelines',
             projects: ['RunDown - AI Task Manager'],
-            timeline: ['SRM University AP'],
+            timeline: ['Visa', 'SRM University AP'],
             related: ['Flask', 'Azure OpenAI']
         },
         'Flask': {
@@ -143,7 +143,7 @@
             category: 'Tools',
             role: 'Distributed version control, collaborative workflows, and repository management across 1000+ commits',
             projects: ['Portfolio Generator', 'Calmify', 'RunDown - AI Task Manager', 'BuddyOnTrain', 'Svalinn', 'Employee Management System'],
-            timeline: ['CultureVo (NoviFE Platform)', 'NextTech Lab', 'SRM University AP'],
+            timeline: ['Visa', 'CultureVo (NoviFE Platform)', 'NextTech Lab', 'SRM University AP'],
             related: ['VS Code']
         },
         'Socket.IO': {
@@ -171,7 +171,7 @@
             category: 'Tools',
             role: 'Integrated engineering environment with debugging, linting, and workspace terminal workflows',
             projects: ['Portfolio Generator', 'Calmify', 'RunDown - AI Task Manager', 'BuddyOnTrain', 'Svalinn', 'Employee Management System'],
-            timeline: ['CultureVo (NoviFE Platform)', 'NextTech Lab', 'SRM University AP'],
+            timeline: ['Visa', 'CultureVo (NoviFE Platform)', 'NextTech Lab', 'SRM University AP'],
             related: ['Git / GitHub']
         },
         'C++': {
@@ -458,7 +458,7 @@
             // Highlight Experience / Timeline
             const timelineItems = document.querySelectorAll('.timeline-item');
             timelineItems.forEach(item => {
-                const header = item.querySelector('.timeline-header')?.textContent?.trim() || '';
+                const header = item.querySelector('.timeline-summary, .timeline-header')?.textContent?.trim() || '';
                 const match = data.timeline.some(t => header.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(header.toLowerCase()));
 
                 if (match) {
@@ -469,7 +469,7 @@
                     if (!badge) {
                         badge = document.createElement('span');
                         badge.className = 'dep-timeline-badge';
-                        item.querySelector('.timeline-header')?.appendChild(badge);
+                        item.querySelector('.timeline-summary, .timeline-header')?.appendChild(badge);
                     }
                     badge.innerHTML = `<i class="fas fa-bolt"></i> UTILIZED IN ROLE`;
                 } else {
