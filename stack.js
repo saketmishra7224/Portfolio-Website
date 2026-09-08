@@ -197,6 +197,7 @@
 
             this.pinnedNode = null;
             this.activeHoverNode = null;
+            this._hoverTimeout = null;
 
             this._initCategoryFilters();
             this._createTooltip();
@@ -349,15 +350,20 @@
                 item.setAttribute('tabindex', '0');
                 item.setAttribute('aria-label', `Inspect ${name} dependencies`);
 
-                // Pointer hover
-                item.addEventListener('mouseenter', (e) => {
+                // Pointer hover with debounce buffer to eliminate flickering
+                item.addEventListener('mouseenter', () => {
                     if (this.pinnedNode) return; // Keep pinned node in focus
+                    clearTimeout(this._hoverTimeout);
+                    if (this.activeHoverNode === name) return; // Already inspecting
                     this.inspectNode(name, version, item, false);
                 });
 
                 item.addEventListener('mouseleave', () => {
                     if (this.pinnedNode) return;
-                    this.clearHover();
+                    clearTimeout(this._hoverTimeout);
+                    this._hoverTimeout = setTimeout(() => {
+                        this.clearHover();
+                    }, 80);
                 });
 
                 // Click to pin/lock
@@ -522,6 +528,7 @@
         }
 
         pinNode(techName, version, itemEl) {
+            clearTimeout(this._hoverTimeout);
             this.pinnedNode = techName;
             this.inspectNode(techName, version, itemEl, true);
 
@@ -534,6 +541,7 @@
         }
 
         clearHover() {
+            clearTimeout(this._hoverTimeout);
             if (this.pinnedNode) return;
             this.tooltip.classList.remove('st-visible');
             this.activeHoverNode = null;
@@ -559,6 +567,7 @@
         }
 
         clearInspection() {
+            clearTimeout(this._hoverTimeout);
             this.pinnedNode = null;
             this.banner.classList.remove('sg-visible');
             this.clearHover();

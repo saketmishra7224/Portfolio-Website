@@ -878,7 +878,7 @@ section:first-of-type,
     border: 1px solid var(--border-primary);
     border-radius: 8px;
     overflow: hidden;
-    transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .stack-module.module-hidden {
@@ -888,9 +888,8 @@ section:first-of-type,
 }
 
 .stack-module:hover {
-    border-color: var(--accent-blue);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
-    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .module-header {
@@ -948,7 +947,7 @@ section:first-of-type,
     border: 1px solid transparent;
     cursor: pointer;
     user-select: none;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.2s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .tech-item:hover {
@@ -965,8 +964,7 @@ section:first-of-type,
 .tech-item.dep-active-node {
     background: rgba(6, 182, 212, 0.12);
     border-color: var(--accent-cyan);
-    box-shadow: 0 0 14px rgba(6, 182, 212, 0.25);
-    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
 }
 
 .tech-item.dep-active-node .tech-name {
@@ -1043,15 +1041,15 @@ section:first-of-type,
     border-radius: 8px;
     padding: 14px 16px;
     opacity: 0;
-    pointer-events: none;
+    pointer-events: none !important;
     transform: translateY(6px) scale(0.97);
-    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .stack-tooltip.st-visible {
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: none !important;
     transform: translateY(0) scale(1);
 }
 
