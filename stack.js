@@ -416,69 +416,72 @@
                 }
             });
 
-            // Highlight Projects
-            const projectCards = document.querySelectorAll('.system-card');
-            projectCards.forEach(card => {
-                const cardName = card.querySelector('.system-name')?.textContent?.trim() || '';
-                const match = data.projects.some(p => cardName.toLowerCase().includes(p.toLowerCase()) || p.toLowerCase().includes(cardName.toLowerCase()));
+            // If pinned to lock, highlight connected projects and timeline
+            if (isPinned) {
+                // Highlight Projects
+                const projectCards = document.querySelectorAll('.system-card');
+                projectCards.forEach(card => {
+                    const cardName = card.querySelector('.system-name')?.textContent?.trim() || '';
+                    const match = data.projects.some(p => cardName.toLowerCase().includes(p.toLowerCase()) || p.toLowerCase().includes(cardName.toLowerCase()));
 
-                if (match) {
-                    card.classList.add('dep-highlight-project');
-                    card.classList.remove('dep-dimmed-project');
+                    if (match) {
+                        card.classList.add('dep-highlight-project');
+                        card.classList.remove('dep-dimmed-project');
 
-                    // Add dynamic dependency indicator badge if not present
-                    let badge = card.querySelector('.dep-project-badge');
-                    if (!badge) {
-                        badge = document.createElement('div');
-                        badge.className = 'dep-project-badge';
-                        card.insertBefore(badge, card.querySelector('.system-image'));
+                        // Add dynamic dependency indicator badge if not present
+                        let badge = card.querySelector('.dep-project-badge');
+                        if (!badge) {
+                            badge = document.createElement('div');
+                            badge.className = 'dep-project-badge';
+                            card.insertBefore(badge, card.querySelector('.system-image'));
+                        }
+                        badge.innerHTML = `<i class="fas fa-bolt"></i> REQUIRES: <span>${techName}</span>`;
+                    } else {
+                        card.classList.add('dep-dimmed-project');
+                        card.classList.remove('dep-highlight-project');
+                        const badge = card.querySelector('.dep-project-badge');
+                        if (badge) badge.remove();
                     }
-                    badge.innerHTML = `<i class="fas fa-bolt"></i> REQUIRES: <span>${techName}</span>`;
-                } else {
-                    card.classList.add('dep-dimmed-project');
-                    card.classList.remove('dep-highlight-project');
-                    const badge = card.querySelector('.dep-project-badge');
-                    if (badge) badge.remove();
-                }
-            });
+                });
 
-            // Also highlight Featured Card if it matches
-            const featuredCards = document.querySelectorAll('.featured-card');
-            featuredCards.forEach(fcard => {
-                const match = data.projects.includes('Calmify');
-                if (match) {
-                    fcard.classList.add('dep-highlight-project');
-                    fcard.classList.remove('dep-dimmed-project');
-                } else {
-                    fcard.classList.add('dep-dimmed-project');
-                    fcard.classList.remove('dep-highlight-project');
-                }
-            });
-
-            // Highlight Experience / Timeline
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            timelineItems.forEach(item => {
-                const header = item.querySelector('.timeline-summary, .timeline-header')?.textContent?.trim() || '';
-                const match = data.timeline.some(t => header.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(header.toLowerCase()));
-
-                if (match) {
-                    item.classList.add('dep-highlight-timeline');
-                    item.classList.remove('dep-dimmed-timeline');
-
-                    let badge = item.querySelector('.dep-timeline-badge');
-                    if (!badge) {
-                        badge = document.createElement('span');
-                        badge.className = 'dep-timeline-badge';
-                        item.querySelector('.timeline-summary, .timeline-header')?.appendChild(badge);
+                // Also highlight Featured Card if it matches
+                const featuredCards = document.querySelectorAll('.featured-card');
+                featuredCards.forEach(fcard => {
+                    const match = data.projects.includes('Calmify');
+                    if (match) {
+                        fcard.classList.add('dep-highlight-project');
+                        fcard.classList.remove('dep-dimmed-project');
+                    } else {
+                        fcard.classList.add('dep-dimmed-project');
+                        fcard.classList.remove('dep-highlight-project');
                     }
-                    badge.innerHTML = `<i class="fas fa-bolt"></i> UTILIZED IN ROLE`;
-                } else {
-                    item.classList.add('dep-dimmed-timeline');
-                    item.classList.remove('dep-highlight-timeline');
-                    const badge = item.querySelector('.dep-timeline-badge');
-                    if (badge) badge.remove();
-                }
-            });
+                });
+
+                // Highlight Experience / Timeline
+                const timelineItems = document.querySelectorAll('.timeline-item');
+                timelineItems.forEach(item => {
+                    const header = item.querySelector('.timeline-summary, .timeline-header')?.textContent?.trim() || '';
+                    const match = data.timeline.some(t => header.toLowerCase().includes(t.toLowerCase()) || t.toLowerCase().includes(header.toLowerCase()));
+
+                    if (match) {
+                        item.classList.add('dep-highlight-timeline');
+                        item.classList.remove('dep-dimmed-timeline');
+
+                        let badge = item.querySelector('.dep-timeline-badge');
+                        if (!badge) {
+                            badge = document.createElement('span');
+                            badge.className = 'dep-timeline-badge';
+                            item.querySelector('.timeline-summary, .timeline-header')?.appendChild(badge);
+                        }
+                        badge.innerHTML = `<i class="fas fa-bolt"></i> UTILIZED IN ROLE`;
+                    } else {
+                        item.classList.add('dep-dimmed-timeline');
+                        item.classList.remove('dep-highlight-timeline');
+                        const badge = item.querySelector('.dep-timeline-badge');
+                        if (badge) badge.remove();
+                    }
+                });
+            }
 
             // Update & Show Contextual Tooltip HUD
             this._updateTooltip(techName, version, data, itemEl, isPinned);
@@ -504,26 +507,33 @@
                 ? 'Inspection LOCKED • Scroll down to view • Esc to reset'
                 : 'Click to lock graph inspection • Esc to reset';
 
-            // Position Tooltip
+            // Position Tooltip using Fixed Viewport Coordinates
             const rect = itemEl.getBoundingClientRect();
-            const tooltipWidth = 320;
+            const tooltipWidth = Math.min(320, window.innerWidth - 32);
             const tooltipHeight = 150;
 
-            let top = rect.top + window.scrollY - tooltipHeight - 12;
-            let left = rect.left + window.scrollX + (rect.width / 2) - (tooltipWidth / 2);
+            // Preferred position: above the item
+            let top = rect.top - tooltipHeight - 10;
+            let left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
 
-            // Bounds checking
-            if (top < window.scrollY + 80) {
-                // flip to bottom if clipped at top
-                top = rect.bottom + window.scrollY + 12;
+            // If clipped at top (navbar is ~72px tall), place below the item
+            if (top < 75) {
+                top = rect.bottom + 10;
             }
+
+            // If clipped at bottom of screen
+            if (top + tooltipHeight > window.innerHeight - 12) {
+                top = Math.max(75, window.innerHeight - tooltipHeight - 12);
+            }
+
+            // Horizontal bounds
             if (left < 16) left = 16;
             if (left + tooltipWidth > window.innerWidth - 16) {
                 left = window.innerWidth - tooltipWidth - 16;
             }
 
-            this.tooltip.style.top = `${top}px`;
-            this.tooltip.style.left = `${left}px`;
+            this.tooltip.style.top = `${Math.round(top)}px`;
+            this.tooltip.style.left = `${Math.round(left)}px`;
             this.tooltip.classList.add('st-visible');
         }
 
@@ -550,6 +560,12 @@
             this.techItems.forEach(item => {
                 item.classList.remove('dep-active-node', 'dep-linked-tech', 'dep-dimmed-tech');
             });
+        }
+
+        clearInspection() {
+            clearTimeout(this._hoverTimeout);
+            this.pinnedNode = null;
+            this.banner.classList.remove('sg-visible');
 
             // Reset projects
             document.querySelectorAll('.system-card, .featured-card').forEach(card => {
@@ -564,12 +580,7 @@
                 const badge = item.querySelector('.dep-timeline-badge');
                 if (badge) badge.remove();
             });
-        }
 
-        clearInspection() {
-            clearTimeout(this._hoverTimeout);
-            this.pinnedNode = null;
-            this.banner.classList.remove('sg-visible');
             this.clearHover();
         }
 

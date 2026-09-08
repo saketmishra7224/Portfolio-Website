@@ -969,7 +969,6 @@ section:first-of-type,
 
 .tech-item.dep-active-node .tech-name {
     color: var(--accent-cyan);
-    font-weight: 600;
 }
 
 .tech-item.dep-active-node .tech-fill {
@@ -993,15 +992,15 @@ section:first-of-type,
 
 /* Dimmed Tech (not in active dependency path) */
 .tech-item.dep-dimmed-tech {
-    opacity: 0.28;
-    filter: grayscale(50%);
+    opacity: 0.35;
 }
 
 .tech-name {
     font-size: 0.9rem;
+    font-weight: 500;
     color: var(--text-primary);
     grid-column: 1;
-    transition: color 0.2s ease;
+    transition: color 0.15s ease;
 }
 
 .tech-version {
@@ -1025,15 +1024,15 @@ section:first-of-type,
     height: 100%;
     background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
     border-radius: 2px;
-    transition: width var(--transition-slow), background 0.3s ease, box-shadow 0.3s ease;
+    transition: width var(--transition-slow);
 }
 
 /* ── Contextual Telemetry Tooltip (HUD) ─ */
 .stack-tooltip {
-    position: absolute;
-    z-index: 9999;
+    position: fixed;
+    z-index: 99999;
     width: 320px;
-    background: rgba(11, 15, 20, 0.95);
+    background: rgba(11, 15, 20, 0.96);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--border-primary);
@@ -1042,15 +1041,15 @@ section:first-of-type,
     padding: 14px 16px;
     opacity: 0;
     pointer-events: none !important;
-    transform: translateY(6px) scale(0.97);
-    transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: none !important;
+    transition: opacity 0.12s ease-out;
+    contain: layout style;
 }
 
 .stack-tooltip.st-visible {
     opacity: 1;
     pointer-events: none !important;
-    transform: translateY(0) scale(1);
+    transform: none !important;
 }
 
 .st-header {
