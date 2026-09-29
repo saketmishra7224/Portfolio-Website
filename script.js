@@ -512,8 +512,10 @@ class NavigationHighlight {
         
         this.navLinks.forEach(link => {
             link.classList.remove('active');
+            link.removeAttribute('aria-current');
             if (link.getAttribute('href') === `#${current}`) {
                 link.classList.add('active');
+                link.setAttribute('aria-current', 'true');
             }
         });
 
@@ -521,8 +523,10 @@ class NavigationHighlight {
         const floatingLinks = document.querySelectorAll('#floating-dock .fd-link[data-section]');
         floatingLinks.forEach(link => {
             link.classList.remove('active');
+            link.removeAttribute('aria-current');
             if (link.getAttribute('data-section') === current) {
                 link.classList.add('active');
+                link.setAttribute('aria-current', 'true');
             }
         });
     }
@@ -665,11 +669,30 @@ class MobileNav {
                 this.closeMenu();
             }
         });
+
+        // Close on Escape, and auto-close when resizing up to desktop
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.toggle.classList.contains('active')) {
+                this.closeMenu();
+                this.toggle.focus();
+            }
+        });
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && this.toggle.classList.contains('active')) {
+                this.closeMenu();
+            }
+        }, { passive: true });
     }
     
     toggleMenu() {
         this.toggle.classList.toggle('active');
-        this.navLinks.classList.toggle('mobile-active');
+        const open = this.navLinks.classList.toggle('mobile-active');
+        // Thumb-friendly: lock background scroll while the drawer is open
+        document.body.style.overflow = open ? 'hidden' : '';
+        if (open) {
+            const first = this.navLinks.querySelector('a');
+            if (first) first.focus({ preventScroll: true });
+        }
         
         // Animate hamburger
         const spans = this.toggle.querySelectorAll('span');
@@ -687,6 +710,12 @@ class MobileNav {
     closeMenu() {
         this.toggle.classList.remove('active');
         this.navLinks.classList.remove('mobile-active');
+        // Restore scroll only if no overlay owns the lock
+        const overlayOpen = document.querySelector('#project-modal.pm-visible, #cmd-palette.cp-visible, #interactive-terminal.itm-open, #shortcuts-modal:not([hidden])');
+        const videoOpen = document.getElementById('videoModal')?.style.display === 'flex';
+        if (!overlayOpen && !videoOpen && document.body.style.overflow === 'hidden') {
+            document.body.style.overflow = '';
+        }
         
         const spans = this.toggle.querySelectorAll('span');
         spans[0].style.transform = 'none';
@@ -795,6 +824,9 @@ class SystemStatus {
 class CursorGlow {
     constructor() {
         this.glow = null;
+        const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        if (calm || coarse) return;
         this.init();
     }
     
@@ -1217,7 +1249,8 @@ class PortfolioSystem {
         console.log('%c[SYSTEM] Initializing portfolio system...', 'color: #06b6d4; font-weight: bold;');
         
         try {
-            // Initialize all components
+            // Initialize all components (power flag first: canvas engines read it)
+            this.components.push(new PowerSaverEngine());
             this.components.push(new TerminalTyper());
             this.components.push(new ScrollProgress());
             this.components.push(new BackToTop());
@@ -1236,6 +1269,16 @@ class PortfolioSystem {
             this.components.push(new MicroInteractionsEngine());
             this.components.push(new PerformanceMonitor());
             this.components.push(new FloatingNavEngine());
+            this.components.push(new HeroNetworkEngine());
+            this.components.push(new HeroChromeEngine());
+            this.components.push(new SystemsShowcaseEngine());
+            this.components.push(new TimelineYearEngine());
+            this.components.push(new ArchAmbientEngine());
+            this.components.push(new ArchTooltipEngine());
+            this.components.push(new ArchTierCollapseEngine());
+            this.components.push(new StackMapEngine());
+            this.components.push(new CursorEngine());
+            this.components.push(new RevealTypeEngine());
             
             // Start terminal typing animation
             const typer = this.components.find(c => c instanceof TerminalTyper);
@@ -1296,6 +1339,821 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// ========================================
+// HERO NETWORK CANVAS — abstract system visualization
+// Layers: Frontend / API / Backend / Database / AI / Cloud
+// Subtle drift, links, travelling particles, cursor shift, hover glow.
+// ========================================
+class HeroNetworkEngine {
+    constructor() {
+        this.canvas = document.getElementById('hero-network');
+        if (!this.canvas) return;
+        this.ctx = this.canvas.getContext('2d');
+        this.hero = document.getElementById('system');
+        this.reduced = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || document.documentElement.dataset.power === 'low';
+        this.mouse = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
+        this.hover = { x: -9999, y: -9999 };
+        this.nodes = [];
+        this.packets = [];
+        this.running = true;
+        this.layers = ['Frontend', 'API', 'Backend', 'Database', 'AI', 'Cloud'];
+        this.init();
+    }
+
+    init() {
+        this.resize();
+        window.addEventListener('resize', () => this.resize(), { passive: true });
+        this.seed();
+
+        if (this.reduced) { this.drawStatic(); return; }
+
+        // Pause offscreen
+        if ('IntersectionObserver' in window && this.hero) {
+            new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    const visible = e.isIntersecting;
+                    if (visible && !this.running) { this.running = true; this.loop(); }
+                    if (!visible) this.running = false;
+                });
+            }, { threshold: 0 }).observe(this.hero);
+        }
+
+        // Cursor shift (desktop, fine pointers only)
+        const fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (fine && this.hero) {
+            this.hero.addEventListener('mousemove', (e) => {
+                const r = this.hero.getBoundingClientRect();
+                this.mouse.tx = (e.clientX - r.left) / Math.max(1, r.width);
+                this.mouse.ty = (e.clientY - r.top) / Math.max(1, r.height);
+                const cr = this.canvas.getBoundingClientRect();
+                this.hover.x = e.clientX - cr.left;
+                this.hover.y = e.clientY - cr.top;
+            }, { passive: true });
+            this.hero.addEventListener('mouseleave', () => {
+                this.hover.x = -9999; this.hover.y = -9999;
+            }, { passive: true });
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && this.running) this.loop();
+        });
+
+        this.loop();
+    }
+
+    resize() {
+        const dpr = Math.min(1.5, window.devicePixelRatio || 1);
+        const r = this.canvas.getBoundingClientRect();
+        const w = Math.max(1, Math.round(r.width));
+        const h = Math.max(1, Math.round(r.height));
+        this.canvas.width = Math.round(w * dpr);
+        this.canvas.height = Math.round(h * dpr);
+        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        this.w = w; this.h = h;
+        this.seed();
+    }
+
+    seed() {
+        if (!this.w) return;
+        const count = Math.max(22, Math.min(44, Math.floor(this.w / 34)));
+        this.nodes = [];
+        for (let i = 0; i < count; i++) {
+            this.nodes.push({
+                x: Math.random() * this.w,
+                y: Math.random() * this.h,
+                vx: (Math.random() - 0.5) * 0.22,
+                vy: (Math.random() - 0.5) * 0.22,
+                r: 1.2 + Math.random() * 1.6,
+                layer: this.layers[i % this.layers.length]
+            });
+        }
+        this.packets = [];
+        for (let i = 0; i < 8; i++) {
+            const a = this.nodes[Math.floor(Math.random() * this.nodes.length)];
+            const b = this.nodes[Math.floor(Math.random() * this.nodes.length)];
+            if (a && b && a !== b) this.packets.push({ a, b, t: Math.random() });
+        }
+    }
+
+    step() {
+        this.mouse.x += (this.mouse.tx - this.mouse.x) * 0.04;
+        this.mouse.y += (this.mouse.ty - this.mouse.y) * 0.04;
+        const px = (this.mouse.x - 0.5) * 14;
+        const py = (this.mouse.y - 0.5) * 10;
+
+        for (const n of this.nodes) {
+            n.x += n.vx; n.y += n.vy;
+            if (n.x < -20) n.x = this.w + 20;
+            if (n.x > this.w + 20) n.x = -20;
+            if (n.y < -20) n.y = this.h + 20;
+            if (n.y > this.h + 20) n.y = -20;
+            n.sx = n.x + px; n.sy = n.y + py;
+        }
+        for (const p of this.packets) {
+            p.t += 0.006;
+            if (p.t >= 1) {
+                p.t = 0;
+                p.a = this.nodes[Math.floor(Math.random() * this.nodes.length)];
+                p.b = this.nodes[Math.floor(Math.random() * this.nodes.length)];
+            }
+        }
+    }
+
+    draw() {
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, this.w, this.h);
+        const LINK = 150;
+
+        // Links
+        for (let i = 0; i < this.nodes.length; i++) {
+            for (let j = i + 1; j < this.nodes.length; j++) {
+                const a = this.nodes[i], b = this.nodes[j];
+                const dx = a.sx - b.sx, dy = a.sy - b.sy;
+                const d = Math.hypot(dx, dy);
+                if (d < LINK) {
+                    const alpha = (1 - d / LINK) * 0.22;
+                    ctx.strokeStyle = `rgba(52, 211, 153, ${alpha.toFixed(3)})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(a.sx, a.sy);
+                    ctx.lineTo(b.sx, b.sy);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Travelling particles
+        for (const p of this.packets) {
+            if (!p.a || !p.b) continue;
+            const x = p.a.sx + (p.b.sx - p.a.sx) * p.t;
+            const y = p.a.sy + (p.b.sy - p.a.sy) * p.t;
+            ctx.fillStyle = 'rgba(52, 211, 153, 0.55)';
+            ctx.beginPath();
+            ctx.arc(x, y, 1.4, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Nodes (+ hover reaction)
+        for (const n of this.nodes) {
+            const dh = Math.hypot(n.sx - this.hover.x, n.sy - this.hover.y);
+            const hot = dh < 90;
+            const r = hot ? n.r + 1.4 : n.r;
+            ctx.fillStyle = hot ? 'rgba(52, 211, 153, 0.9)' : 'rgba(168, 177, 185, 0.5)';
+            ctx.beginPath();
+            ctx.arc(n.sx, n.sy, r, 0, Math.PI * 2);
+            ctx.fill();
+            if (hot) {
+                ctx.strokeStyle = 'rgba(52, 211, 153, 0.35)';
+                ctx.beginPath();
+                ctx.arc(n.sx, n.sy, r + 6, 0, Math.PI * 2);
+                ctx.stroke();
+            } else {
+                ctx.fillStyle = 'rgba(52, 211, 153, 0.10)';
+                ctx.beginPath();
+                ctx.arc(n.sx, n.sy, r + 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
+
+    drawStatic() {
+        this.step();
+        this.draw();
+    }
+
+    loop() {
+        if (!this.running || document.hidden) return;
+        this.step();
+        this.draw();
+        requestAnimationFrame(() => this.loop());
+    }
+}
+
+// ========================================
+// HERO CHROME — nav compress, scroll fade, portrait parallax
+// ========================================
+class HeroChromeEngine {
+    constructor() {
+        this.nav = document.querySelector('.system-nav');
+        this.heroBox = document.querySelector('.hero-container');
+        this.hero = document.getElementById('system');
+        this.pic = document.querySelector('.hero-pic');
+        this.toggle = document.querySelector('.mobile-toggle');
+        this.reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.ticking = false;
+        this.init();
+    }
+
+    init() {
+        window.addEventListener('scroll', () => {
+            if (!this.ticking) {
+                window.requestAnimationFrame(() => { this.onScroll(); this.ticking = false; });
+                this.ticking = true;
+            }
+        }, { passive: true });
+        this.onScroll();
+
+        // Mobile drawer a11y state
+        if (this.toggle) {
+            this.toggle.addEventListener('click', () => {
+                const open = this.toggle.classList.contains('active');
+                this.toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+        }
+
+        // Subtle portrait parallax (fine pointers, motion-safe)
+        const fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (fine && !this.reduced && this.hero && this.pic) {
+            this.hero.addEventListener('mousemove', (e) => {
+                const r = this.hero.getBoundingClientRect();
+                const dx = ((e.clientX - r.left) / r.width - 0.5) * 10;
+                const dy = ((e.clientY - r.top) / r.height - 0.5) * 8;
+                this.pic.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`;
+            }, { passive: true });
+            this.hero.addEventListener('mouseleave', () => {
+                this.pic.style.transform = '';
+            }, { passive: true });
+        }
+    }
+
+    onScroll() {
+        const y = window.pageYOffset || document.documentElement.scrollTop;
+        if (this.nav) this.nav.classList.toggle('nav-compressed', y > 24);
+        if (this.heroBox) {
+            this.heroBox.classList.remove('hero-fade');
+            this.heroBox.style.opacity = '';
+        }
+    }
+}
+
+// ========================================
+// SYSTEMS SHOWCASE — progress rail, live index, cursor parallax
+// Presentation only. Card DOM, links, and modal hooks untouched.
+// ========================================
+class SystemsShowcaseEngine {
+    constructor() {
+        this.section = document.getElementById('systems');
+        this.grid = document.getElementById('systems-grid');
+        if (!this.section || !this.grid) return;
+        this.cards = Array.from(this.grid.querySelectorAll('.system-card'));
+        this.fill = document.getElementById('systems-progress-fill');
+        this.current = document.getElementById('systems-current');
+        this.reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        this.ticking = false;
+        this.init();
+    }
+
+    init() {
+        window.addEventListener('scroll', () => {
+            if (!this.ticking) {
+                window.requestAnimationFrame(() => { this.update(); this.ticking = false; });
+                this.ticking = true;
+            }
+        }, { passive: true });
+        this.update();
+
+        // Screenshot drift: a few pixels toward cursor (featured + grid)
+        if (this.fine && !this.reduced) {
+            this.cards.forEach(card => {
+                const img = card.querySelector('.system-image');
+                if (!img) return;
+                card.addEventListener('mousemove', (e) => {
+                    const r = card.getBoundingClientRect();
+                    const dx = ((e.clientX - r.left) / Math.max(1, r.width) - 0.5) * 10;
+                    const dy = ((e.clientY - r.top) / Math.max(1, r.height) - 0.5) * 8;
+                    card.style.setProperty('--px', `${dx.toFixed(1)}px`);
+                    card.style.setProperty('--py', `${dy.toFixed(1)}px`);
+                }, { passive: true });
+                card.addEventListener('mouseleave', () => {
+                    card.style.setProperty('--px', '0px');
+                    card.style.setProperty('--py', '0px');
+                }, { passive: true });
+            });
+        }
+    }
+
+    update() {
+        const vh = window.innerHeight || 800;
+        const r = this.section.getBoundingClientRect();
+
+        // Progress: section top at 70% viewport -> bottom at 45% viewport
+        const span = Math.max(1, r.height - vh * 0.25);
+        const p = Math.min(1, Math.max(0, (vh * 0.7 - r.top) / span));
+        if (this.fill) this.fill.style.width = `${(p * 100).toFixed(1)}%`;
+
+        // Live index: last card whose top cleared 62% of viewport
+        let idx = 1;
+        this.cards.forEach((card, i) => {
+            const cr = card.getBoundingClientRect();
+            if (cr.top < vh * 0.62) idx = i + 1;
+        });
+        if (this.current) this.current.textContent = String(idx).padStart(2, '0');
+    }
+}
+
+// ========================================
+// TIMELINE YEAR ENGINE — activates nearest deployment-year tick
+// Presentation only. Dates, roles, and accordion hooks untouched.
+// ========================================
+class TimelineYearEngine {
+    constructor() {
+        this.container = document.getElementById('timeline-container');
+        if (!this.container) return;
+        this.years = Array.from(this.container.querySelectorAll('.timeline-year'));
+        if (this.years.length === 0) return;
+        this.ticking = false;
+        this.init();
+    }
+
+    init() {
+        window.addEventListener('scroll', () => {
+            if (!this.ticking) {
+                window.requestAnimationFrame(() => { this.update(); this.ticking = false; });
+                this.ticking = true;
+            }
+        }, { passive: true });
+        this.update();
+    }
+
+    update() {
+        const vh = window.innerHeight || 800;
+        let active = this.years[0];
+        this.years.forEach(tick => {
+            if (tick.getBoundingClientRect().top < vh * 0.6) active = tick;
+        });
+        this.years.forEach(tick => tick.classList.toggle('year-active', tick === active));
+    }
+}
+
+// ========================================
+// ARCH AMBIENT FIELD — calm downward particle drift behind the pipeline
+// Decorative only. No edges drawn, so no architecture is implied.
+// ========================================
+class ArchAmbientEngine {
+    constructor() {
+        this.canvas = document.getElementById('arch-canvas');
+        this.pane = document.querySelector('.arch-graph-pane');
+        if (!this.canvas || !this.pane) return;
+        this.reduced = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || document.documentElement.dataset.power === 'low';
+        if (this.reduced) return;
+        this.ctx = this.canvas.getContext('2d');
+        this.parts = [];
+        this.running = true;
+        this.init();
+    }
+
+    init() {
+        this.resize();
+        window.addEventListener('resize', () => this.resize(), { passive: true });
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    const vis = e.isIntersecting;
+                    if (vis && !this.running) { this.running = true; this.loop(); }
+                    if (!vis) this.running = false;
+                });
+            }, { threshold: 0 }).observe(this.pane);
+        }
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && this.running) this.loop();
+        });
+        this.loop();
+    }
+
+    resize() {
+        const dpr = Math.min(1.5, window.devicePixelRatio || 1);
+        const r = this.pane.getBoundingClientRect();
+        this.w = Math.max(1, Math.round(r.width));
+        this.h = Math.max(1, Math.round(r.height));
+        this.canvas.width = Math.round(this.w * dpr);
+        this.canvas.height = Math.round(this.h * dpr);
+        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        this.parts = [];
+        const n = Math.max(24, Math.min(60, Math.floor(this.w * this.h / 22000)));
+        for (let i = 0; i < n; i++) {
+            this.parts.push({
+                x: Math.random() * this.w,
+                y: Math.random() * this.h,
+                vy: 0.12 + Math.random() * 0.3,
+                vx: (Math.random() - 0.5) * 0.08,
+                r: 0.8 + Math.random() * 1.4,
+                a: 0.15 + Math.random() * 0.3,
+                ph: Math.random() * Math.PI * 2
+            });
+        }
+    }
+
+    loop() {
+        if (!this.running || document.hidden) return;
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, this.w, this.h);
+        const t = performance.now() / 1000;
+        for (const p of this.parts) {
+            p.y += p.vy; p.x += p.vx;
+            if (p.y > this.h + 6) { p.y = -6; p.x = Math.random() * this.w; }
+            const tw = p.a * (0.7 + 0.3 * Math.sin(t * 1.4 + p.ph));
+            ctx.fillStyle = `rgba(52, 211, 153, ${tw.toFixed(3)})`;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        requestAnimationFrame(() => this.loop());
+    }
+}
+
+// ========================================
+// ARCH TOOLTIP — hover readout sourced from existing node DOM text
+// ========================================
+class ArchTooltipEngine {
+    constructor() {
+        this.section = document.getElementById('architecture');
+        if (!this.section) return;
+        this.fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        this.reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!this.fine || this.reduced) return;
+        this.tip = document.createElement('div');
+        this.tip.className = 'arch-tooltip';
+        this.tip.setAttribute('role', 'tooltip');
+        document.body.appendChild(this.tip);
+        this.bind();
+    }
+
+    bind() {
+        const nodes = this.section.querySelectorAll('.arch-node');
+        nodes.forEach(node => {
+            node.addEventListener('mouseenter', (e) => this.show(node, e), { passive: true });
+            node.addEventListener('mousemove', (e) => this.place(e), { passive: true });
+            node.addEventListener('mouseleave', () => this.hide(), { passive: true });
+            node.addEventListener('click', () => this.hide(), { passive: true });
+        });
+    }
+
+    show(node, e) {
+        const tier = node.closest('.arch-tier');
+        const tierName = tier ? (tier.querySelector('.arch-tier-title') || {}).textContent : '';
+        const name = (node.querySelector('.an-name') || {}).textContent || '';
+        const meta = (node.querySelector('.an-meta') || {}).textContent || '';
+        this.tip.innerHTML = '';
+        const t = document.createElement('div'); t.className = 'at-tier'; t.textContent = (tierName || '').trim();
+        const n = document.createElement('div'); n.className = 'at-name'; n.textContent = name.trim();
+        const m = document.createElement('div'); m.className = 'at-meta'; m.textContent = meta.trim();
+        const h = document.createElement('div'); h.className = 'at-hint'; h.textContent = 'Click to inspect data paths';
+        this.tip.append(t, n, m, h);
+        this.tip.classList.add('at-visible');
+        this.place(e);
+    }
+
+    place(e) {
+        if (!e || e.clientX === undefined) return;
+        const pad = 14;
+        const w = 270, h = 130;
+        let x = e.clientX + 16, y = e.clientY + 16;
+        if (x + w > window.innerWidth - pad) x = e.clientX - w - 8;
+        if (y + h > window.innerHeight - pad) y = e.clientY - h - 8;
+        this.tip.style.left = `${Math.round(x)}px`;
+        this.tip.style.top = `${Math.round(y)}px`;
+    }
+
+    hide() { this.tip.classList.remove('at-visible'); }
+}
+
+// ========================================
+// ARCH TIER COLLAPSE — expandable layer groups (compact viewports)
+// ========================================
+class ArchTierCollapseEngine {
+    constructor() {
+        this.section = document.getElementById('architecture');
+        if (!this.section) return;
+        this.tiers = Array.from(this.section.querySelectorAll('.arch-tier'));
+        this.tiers.forEach(tier => {
+            const header = tier.querySelector('.arch-tier-header');
+            if (!header || header.querySelector('.arch-collapse-hint')) return;
+            const chev = document.createElement('i');
+            chev.className = 'fas fa-chevron-down arch-collapse-hint';
+            chev.setAttribute('aria-hidden', 'true');
+            header.appendChild(chev);
+            header.setAttribute('role', 'button');
+            header.setAttribute('tabindex', '0');
+            header.setAttribute('aria-expanded', 'true');
+            const toggle = () => {
+                const collapsed = tier.classList.toggle('tier-collapsed');
+                header.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+            };
+            header.addEventListener('click', (e) => {
+                if (window.innerWidth <= 600) toggle();
+            });
+            header.addEventListener('keydown', (e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && window.innerWidth <= 600) {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        });
+    }
+}
+
+// ========================================
+// STACK MAP — constellation hub wired to the existing category filter
+// Labels mirror existing module headers. No technologies added or renamed.
+// ========================================
+class StackMapEngine {
+    constructor() {
+        this.map = document.getElementById('stack-map');
+        this.section = document.getElementById('stack');
+        if (!this.map || !this.section) return;
+        this.canvas = document.getElementById('stack-canvas');
+        this.core = this.map.querySelector('.stack-hub-core');
+        this.sats = Array.from(this.map.querySelectorAll('.stack-sat'));
+        this.reduced = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || document.documentElement.dataset.power === 'low';
+        this.running = true;
+        this.packets = [];
+        this.ends = [];
+        this.init();
+    }
+
+    filter(id) {
+        if (window.techStackInspector) window.techStackInspector.setCategoryFilter(id);
+        this.syncActive(id);
+    }
+
+    syncActive(id) {
+        this.sats.forEach(s => s.classList.toggle('sat-active', s.dataset.cluster === id));
+        this.peer(id === 'all' ? null : id);
+    }
+
+    peer(cluster) {
+        this.section.querySelectorAll('.stack-module').forEach(m => {
+            m.classList.toggle('map-peer', !!cluster && m.dataset.category === cluster);
+        });
+    }
+
+    init() {
+        // Satellite <-> existing filter wiring
+        this.sats.forEach(sat => {
+            sat.addEventListener('mouseenter', () => this.peer(sat.dataset.cluster), { passive: true });
+            sat.addEventListener('mouseleave', () => {
+                const active = this.sats.find(s => s.classList.contains('sat-active'));
+                this.peer(active ? active.dataset.cluster : null);
+            }, { passive: true });
+            sat.addEventListener('click', () => {
+                this.filter(sat.dataset.cluster);
+                // On phones, bring the filtered cluster group into view
+                if (window.innerWidth < 768) {
+                    const grid = this.section.querySelector('.stack-grid');
+                    if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        if (this.core) this.core.addEventListener('click', () => this.filter('all'));
+
+        // Keep satellites in sync when filter tabs are used directly
+        this.section.querySelectorAll('.stack-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => this.syncActive(btn.dataset.filter));
+        });
+
+        // Reverse highlight: hovering a cluster module lights its satellite
+        this.section.querySelectorAll('.stack-module').forEach(m => {
+            m.addEventListener('mouseenter', () => {
+                const sat = this.sats.find(s => s.dataset.cluster === m.dataset.category);
+                if (sat) sat.classList.add('sat-active');
+            }, { passive: true });
+            m.addEventListener('mouseleave', () => {
+                const active = document.querySelector('.stack-filter-btn.active');
+                const id = active ? active.dataset.filter : 'all';
+                this.syncActive(id);
+            }, { passive: true });
+        });
+
+        if (!this.canvas || this.reduced) return;
+        this.ctx = this.canvas.getContext('2d');
+        this.measure();
+        window.addEventListener('resize', () => this.measure(), { passive: true });
+        window.addEventListener('load', () => this.measure(), { passive: true });
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    const vis = e.isIntersecting;
+                    if (vis && !this.running) { this.running = true; this.loop(); }
+                    if (!vis) this.running = false;
+                });
+            }, { threshold: 0 }).observe(this.map);
+        }
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && this.running) this.loop();
+        });
+        this.loop();
+    }
+
+    measure() {
+        const dpr = Math.min(1.5, window.devicePixelRatio || 1);
+        const r = this.map.getBoundingClientRect();
+        this.w = Math.max(1, Math.round(r.width));
+        this.h = Math.max(1, Math.round(r.height));
+        this.canvas.width = Math.round(this.w * dpr);
+        this.canvas.height = Math.round(this.h * dpr);
+        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const base = this.map.getBoundingClientRect();
+        const center = (el) => {
+            const q = el.getBoundingClientRect();
+            return { x: q.left - base.left + q.width / 2, y: q.top - base.top + q.height / 2 };
+        };
+        const origin = center(this.core);
+        this.ends = this.sats.map(s => center(s));
+        this.origin = origin;
+        this.packets = this.ends.map((_, i) => ({ i, t: Math.random() }));
+    }
+
+    loop() {
+        if (!this.running || document.hidden) return;
+        const ctx = this.ctx;
+        ctx.clearRect(0, 0, this.w, this.h);
+        if (this.origin) {
+            this.ends.forEach((p) => {
+                ctx.strokeStyle = 'rgba(52, 211, 153, 0.16)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(this.origin.x, this.origin.y);
+                ctx.lineTo(p.x, p.y);
+                ctx.stroke();
+            });
+            for (const k of this.packets) {
+                k.t += 0.008;
+                if (k.t >= 1) k.t = 0;
+                const p = this.ends[k.i];
+                if (!p) continue;
+                const x = this.origin.x + (p.x - this.origin.x) * k.t;
+                const y = this.origin.y + (p.y - this.origin.y) * k.t;
+                ctx.fillStyle = 'rgba(52, 211, 153, 0.6)';
+                ctx.beginPath();
+                ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        requestAnimationFrame(() => this.loop());
+    }
+}
+
+// ========================================
+// CURSOR FOLLOWER — faint contextual indicator, native cursor preserved
+// Desktop fine-pointers only. VIEW on projects, arrow on external links.
+// ========================================
+class CursorEngine {
+    constructor() {
+        this.el = document.getElementById('cursor');
+        if (!this.el) return;
+        const fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!fine || calm) return;
+        this.ring = this.el.querySelector('.cursor-ring');
+        this.label = this.el.querySelector('.cursor-label');
+        this.x = -100; this.y = -100;
+        this.rx = -100; this.ry = -100;
+        this.on = false;
+        this.init();
+    }
+
+    init() {
+        document.addEventListener('mousemove', (e) => {
+            this.x = e.clientX; this.y = e.clientY;
+            if (!this.on) { this.on = true; this.el.classList.add('cursor-on'); }
+            this.context(e);
+        }, { passive: true });
+        document.addEventListener('mouseleave', () => {
+            this.on = false;
+            this.el.classList.remove('cursor-on');
+        });
+        document.addEventListener('mouseenter', () => {
+            if (this.x > -100) { this.on = true; this.el.classList.add('cursor-on'); }
+        });
+        this.loop();
+    }
+
+    context(e) {
+        const t = e.target;
+        if (!t || !t.closest) return;
+        let mode = '', text = '';
+        if (t.closest('.system-card')) { mode = 'cursor-view'; text = 'VIEW'; }
+        else if (t.closest('a[target="_blank"]')) { mode = 'cursor-link'; text = '↗'; }
+        else if (t.closest('button, input, .endpoint-link')) { mode = 'cursor-down'; }
+        this.el.classList.remove('cursor-view', 'cursor-link', 'cursor-down');
+        if (mode) this.el.classList.add(mode);
+        if (this.label) this.label.textContent = text;
+    }
+
+    loop() {
+        this.rx += (this.x - this.rx) * 0.16;
+        this.ry += (this.y - this.ry) * 0.16;
+        this.el.style.transform = `translate(${this.rx.toFixed(1)}px, ${this.ry.toFixed(1)}px)`;
+        requestAnimationFrame(() => this.loop());
+    }
+}
+
+// ========================================
+// TYPE REVEAL — staggered word entrance for headings + hero arrival
+// Splits text nodes into word spans (presentation only, copy untouched).
+// Hierarchy: hero strongest, sections subtle, footer untouched.
+// ========================================
+class RevealTypeEngine {
+    constructor() {
+        this.calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.init();
+    }
+
+    split(el) {
+        let i = 0;
+        const walk = (node) => {
+            Array.from(node.childNodes).forEach(child => {
+                if (child.nodeType === 3) {
+                    const frag = document.createDocumentFragment();
+                    child.textContent.split(/(\s+)/).forEach(part => {
+                        if (!part) return;
+                        if (/^\s+$/.test(part)) {
+                            frag.appendChild(document.createTextNode(' '));
+                        } else {
+                            const w = document.createElement('span');
+                            w.className = 'w';
+                            const inner = document.createElement('span');
+                            inner.className = 'wi';
+                            inner.style.setProperty('--i', i++);
+                            inner.textContent = part;
+                            w.appendChild(inner);
+                            frag.appendChild(w);
+                        }
+                    });
+                    node.replaceChild(frag, child);
+                } else if (child.nodeType === 1) {
+                    walk(child);
+                }
+            });
+        };
+        walk(el);
+        return i;
+    }
+
+    init() {
+        const heroName = document.querySelector('.hero-name');
+        const titles = Array.from(document.querySelectorAll('.section-title'));
+        const hero = document.getElementById('system');
+
+        if (this.calm) {
+            titles.forEach(t => t.classList.add('is-in'));
+            if (heroName) heroName.classList.add('is-in');
+            return;
+        }
+
+        // Hero arrival (strongest motion on the page)
+        if (hero) {
+            hero.classList.add('boot-enter');
+            void hero.offsetHeight;
+        }
+        if (heroName) {
+            this.split(heroName);
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                heroName.classList.add('is-in');
+                if (hero) { hero.classList.add('boot-in'); }
+            }));
+        } else if (hero) {
+            requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add('boot-in')));
+        }
+
+        // Section headings: subtle stagger on first reveal
+        titles.forEach(t => this.split(t));
+        if (!('IntersectionObserver' in window)) {
+            titles.forEach(t => t.classList.add('is-in'));
+            return;
+        }
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-in');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.35, rootMargin: '0px 0px -40px 0px' });
+        titles.forEach(t => io.observe(t));
+    }
+}
+
+// ========================================
+// POWER SAVER — flags low-powered / data-saving devices before any
+// canvas engine constructs, so they render calm fallbacks instead.
+// ========================================
+class PowerSaverEngine {
+    constructor() {
+        try {
+            const conn = navigator.connection || {};
+            const cores = navigator.hardwareConcurrency || 8;
+            const ram = navigator.deviceMemory || 8;
+            if (conn.saveData === true || cores <= 4 || ram <= 3) {
+                document.documentElement.dataset.power = 'low';
+            }
+        } catch (e) { /* noop */ }
+    }
+}
 
 // ========================================
 // START THE SYSTEM

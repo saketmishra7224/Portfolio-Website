@@ -493,7 +493,9 @@
             this.isOpen = false;
             this.backdrop.classList.remove('pm-visible');
             this.modal.classList.remove('pm-visible');
-            document.body.style.overflow = '';
+            if (!window.interactiveTerminal || !window.interactiveTerminal.isOpen) {
+                document.body.style.overflow = '';
+            }
 
             // Return focus to triggering element
             if (this.lastFocusedElement && typeof this.lastFocusedElement.focus === 'function') {

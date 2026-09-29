@@ -54,6 +54,19 @@
         { id: 'link-linkedin', label: 'Open LinkedIn',       section: 'Links',      icon: 'fab fa-linkedin',      action: () => window.open('https://linkedin.com/in/saket-mishra-1a1b312a1', '_blank') },
         { id: 'link-instagram',label: 'Open Instagram',      section: 'Links',      icon: 'fab fa-instagram',     action: () => window.open('https://www.instagram.com/saketmishra.99/', '_blank') },
         { id: 'link-email',    label: 'Send Email',          section: 'Links',      icon: 'fas fa-paper-plane',   action: () => window.open('mailto:saketmishra9476@gmail.com') },
+        { id: 'link-email-copy', label: 'Copy Email Address',   section: 'Links',      icon: 'fas fa-copy',         action: () => {
+            const email = 'saketmishra9476@gmail.com';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(email).catch(() => {});
+            } else {
+                const ta = document.createElement('textarea');
+                ta.value = email;
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); } catch (e) { /* noop */ }
+                ta.remove();
+            }
+        } },
     ];
 
     // ── Helpers ───────────────────────────

@@ -468,6 +468,22 @@ const COMMANDS = {
                 '<span class="itm-heading">└────────────────────────────────────────────────┘</span>'
             ].join('\n');
         }
+    },
+
+    exit: {
+        description: 'Close interactive terminal session',
+        execute: () => {
+            setTimeout(() => { if (window.interactiveTerminal) window.interactiveTerminal.close(); }, 120);
+            return '<span class="itm-muted">Session terminated. Closing window...</span>';
+        }
+    },
+
+    quit: {
+        description: 'Close interactive terminal session',
+        execute: () => {
+            setTimeout(() => { if (window.interactiveTerminal) window.interactiveTerminal.close(); }, 120);
+            return '<span class="itm-muted">Session terminated. Closing window...</span>';
+        }
     }
 };
 
@@ -588,24 +604,36 @@ class InteractiveTerminal {
         this.fab = document.createElement('button');
         this.fab.id = 'terminal-fab';
         this.fab.setAttribute('aria-label', 'Toggle interactive terminal');
-        this.fab.innerHTML = '<i class="fas fa-terminal"></i>';
+        this.fab.setAttribute('aria-expanded', 'false');
+        this.fab.innerHTML = '<i class="fas fa-terminal" aria-hidden="true"></i>';
         document.body.appendChild(this.fab);
+
+        // Backdrop overlay
+        this.backdrop = document.createElement('div');
+        this.backdrop.id = 'terminal-backdrop';
+        this.backdrop.className = 'itm-backdrop';
+        this.backdrop.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(this.backdrop);
 
         // Terminal panel
         this.panel = document.createElement('div');
         this.panel.id = 'interactive-terminal';
         this.panel.setAttribute('role', 'dialog');
+        this.panel.setAttribute('aria-modal', 'true');
         this.panel.setAttribute('aria-label', 'Interactive terminal');
         this.panel.innerHTML = `
             <div class="itm-header">
                 <div class="itm-controls">
-                    <span class="itm-dot itm-dot-red" title="Close"></span>
+                    <span class="itm-dot itm-dot-red" title="Close terminal" aria-label="Close terminal"></span>
                     <span class="itm-dot itm-dot-yellow" title="Minimize"></span>
                     <span class="itm-dot itm-dot-green" title="Maximize"></span>
                 </div>
                 <div class="itm-title">interactive-terminal — saket@system:~</div>
                 <div class="itm-actions">
-                    <span class="itm-shortcut">Ctrl+\`</span>
+                    <span class="itm-shortcut" title="Press Ctrl+C or Ctrl+\` to close">Ctrl+\` / Ctrl+C</span>
+                    <button class="itm-close-btn" id="itm-close-btn" aria-label="Close interactive terminal" title="Close terminal (Ctrl+C)">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
             <div class="itm-body" id="itm-body">
@@ -640,7 +668,7 @@ class InteractiveTerminal {
         // Print welcome message
         this._appendOutput([
             '<span class="itm-heading">Welcome to Saket Mishra\'s Interactive Terminal</span>',
-            '<span class="itm-muted">Type </span><span class="itm-cmd-name">help</span><span class="itm-muted"> to see available commands. Press </span><span class="itm-cmd-name">Ctrl+`</span><span class="itm-muted"> or click the button to toggle.</span>',
+            '<span class="itm-muted">Type </span><span class="itm-cmd-name">help</span><span class="itm-muted"> to see available commands. Press </span><span class="itm-cmd-name">Ctrl+`</span><span class="itm-muted"> or click the terminal button to toggle.</span>',
             ''
         ].join('\n'));
     }
@@ -648,10 +676,30 @@ class InteractiveTerminal {
     // ── Event Bindings ────────────────────
     _bindEvents() {
         // FAB click
-        this.fab.addEventListener('click', () => this.toggle());
+        this.fab.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toggle();
+        });
 
         // Close on red dot
-        this.panel.querySelector('.itm-dot-red').addEventListener('click', () => this.close());
+        this.panel.querySelector('.itm-dot-red').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.close();
+        });
+
+        // Close on dedicated close button (X)
+        const closeBtn = this.panel.querySelector('#itm-close-btn');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.close();
+            });
+        }
+
+        // Close on backdrop click
+        this.backdrop.addEventListener('click', () => {
+            this.close();
+        });
 
         // Input events
         this.input.addEventListener('keydown', (e) => this._handleKeydown(e));
@@ -659,21 +707,36 @@ class InteractiveTerminal {
 
         // Click on panel focuses input
         this.panel.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'A' && e.target !== this.input) {
+            if (e.target.tagName !== 'A' && !e.target.closest('button') && !e.target.closest('.itm-controls') && e.target !== this.input) {
                 this.input.focus();
             }
         });
 
-        // Global keyboard shortcut: Ctrl+`
+        // Global keyboard shortcuts
         document.addEventListener('keydown', (e) => {
+            // While terminal is open:
+            if (this.isOpen) {
+                // Ctrl+C closes the terminal modal instead of regular copy
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.close();
+                    return;
+                }
+                // Escape closes terminal
+                if (e.key === 'Escape') {
+                    e.preventDefault();
+                    this.close();
+                    return;
+                }
+            }
+
+            // Global toggle shortcut: Ctrl+`
             if (e.ctrlKey && e.key === '`') {
                 e.preventDefault();
                 this.toggle();
             }
-            if (e.key === 'Escape' && this.isOpen) {
-                this.close();
-            }
-        });
+        }, true);
 
         // Close autocomplete on outside click
         document.addEventListener('click', (e) => {
@@ -689,22 +752,40 @@ class InteractiveTerminal {
     }
 
     open() {
+        if (this.isOpen) return;
         this.isOpen = true;
         this.panel.classList.add('itm-open');
+        this.backdrop.classList.add('itm-backdrop-visible');
         this.fab.classList.add('itm-fab-active');
+        this.fab.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
         // Small delay for transition, then focus
-        setTimeout(() => this.input.focus(), 300);
+        setTimeout(() => this.input.focus(), 250);
     }
 
     close() {
+        if (!this.isOpen) return;
         this.isOpen = false;
         this.panel.classList.remove('itm-open');
+        this.backdrop.classList.remove('itm-backdrop-visible');
         this.fab.classList.remove('itm-fab-active');
+        this.fab.setAttribute('aria-expanded', 'false');
         this._hideAutocomplete();
+        if (!window.projectModal || !window.projectModal.isOpen) {
+            document.body.style.overflow = '';
+        }
     }
 
     // ── Keydown Handler ───────────────────
     _handleKeydown(e) {
+        // Ctrl+C while input is focused closes terminal
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'C')) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.close();
+            return;
+        }
+
         // Tab completion
         if (e.key === 'Tab') {
             e.preventDefault();
@@ -963,10 +1044,10 @@ class InteractiveTerminal {
 // INITIALIZATION
 // ========================================
 document.addEventListener('DOMContentLoaded', async () => {
+    // Initialize interactive terminal immediately
+    window.interactiveTerminal = new InteractiveTerminal();
+
     // Run boot sequence
     const boot = new BootSequence();
     await boot.run();
-
-    // Initialize interactive terminal
-    window.interactiveTerminal = new InteractiveTerminal();
 });
